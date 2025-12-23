@@ -6,18 +6,18 @@ Available healthcare and biomedical datasets that you can specify and target are
 
 ### Clinical Research
 
-`valyu/valyu-clinical-trials` - Clinical trials from ClinicalTrials.gov	Trial monitoring and enrolment
-`valyu/valyu-drug-labels` - FDA drug labels from DailyMed	Drug safety and prescribing
-`valyu/valyu-pubmed` - Biomedical literature from PubMed	Scientific research
-`valyu/valyu-arxiv` - Pre-print scientific papers	Latest research
-`valyu/valyu-biorxiv` - Life sciences preprints	Life sciences research
-`valyu/valyu-medrxiv` - Health and clinical research preprints
+1. `valyu/valyu-clinical-trials` - Clinical trials from ClinicalTrials.gov	Trial monitoring and enrolment
+2. `valyu/valyu-drug-labels` - FDA drug labels from DailyMed	Drug safety and prescribing
+3. `valyu/valyu-pubmed` - Biomedical literature from PubMed	Scientific research
+4. `valyu/valyu-arxiv` - Pre-print scientific papers	Latest research
+5. `valyu/valyu-biorxiv` - Life sciences preprints	Life sciences research
+6. `valyu/valyu-medrxiv` - Health and clinical research preprints
 
 ### Pharmaceutical Business
 
-`valyu/valyu-sec-filings` - Pharmaceutical company SEC documents	Business strategy and pipeline
-`valyu/valyu-stocks` - Pharma stock prices and performance	Market analysis
-`valyu/valyu-earnings-US` - Quarterly earnings reports
+1. `valyu/valyu-sec-filings` - Pharmaceutical company SEC documents	Business strategy and pipeline
+2. `valyu/valyu-stocks` - Pharma stock prices and performance	Market analysis
+3. `valyu/valyu-earnings-US` - Quarterly earnings reports
 
 ### Target Specific Datasets
 
