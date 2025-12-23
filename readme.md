@@ -33,3 +33,11 @@ Please send a PR to submit an example
 ## Contributing
 
 Built something with Valyu API you want to showcase? Please send in a contribution and feel free to send in recipes as well.
+
+## Powered by Valyu Badge
+
+Show off your Valyu-powered application with our official badge.
+
+Building something with Valyu? We’d love to see our badge on your site.
+
+![Badge](https://mintcdn.com/valyu/zjgvZRBC0rk8tiw3/images/poweredby-dark.png?w=1650&fit=max&auto=format&n=zjgvZRBC0rk8tiw3&q=85&s=27a4a06ce4e2af4baa3437f50f0cf03a)
