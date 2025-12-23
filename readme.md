@@ -2,7 +2,7 @@
 
 Explore a vast library of practical, open-source example recipes to build awesome solutions with Valyu APIs as fast as possible. Practical, production-ready recipes for building AI agents with high-quality search, research and information retrieval using Valyu.
 
-## What you'll learn
+## What you'll have access to
 - How to search financial, academic, patent, and web data
 - How to build research & RAG agents
 - How to benchmark Valyu against other search APIs
@@ -12,8 +12,7 @@ Explore a vast library of practical, open-source example recipes to build awesom
 
 We have a [great quickstart on our docs](https://docs.valyu.ai/quickstart) for you to begin your journey.
 
-
-## Real World (By the Team) Examples
+## Real World Examples
 
 - [Polyseer](https://polyseer.xyz/) by [@yorkeccak](https://x.com/yorkeccak)
 - [Bio](https://bio.valyu.ai/) by [@yorkeccak](https://x.com/yorkeccak)
