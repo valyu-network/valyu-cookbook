@@ -40,4 +40,4 @@ Show off your Valyu-powered application with our official badge.
 
 Building something with Valyu? We’d love to see our badge on your site.
 
-![Badge](https://mintcdn.com/valyu/zjgvZRBC0rk8tiw3/images/poweredby-dark.png?w=500&fit=max&auto=format&n=zjgvZRBC0rk8tiw3&q=85&s=27a4a06ce4e2af4baa3437f50f0cf03a)
+![Badge](https://mintcdn.com/valyu/zjgvZRBC0rk8tiw3/images/poweredby-dark.png?w=1000&fit=max&auto=format&n=zjgvZRBC0rk8tiw3&q=85&s=27a4a06ce4e2af4baa3437f50f0cf03a)
