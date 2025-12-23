@@ -1,8 +1,6 @@
 # Valyu Cookbook
 
-Explore a vast library of practical, open-source example recipes to build awesome solutions with Valyu APIs as fast as possible. 
-
-Practical, production-ready recipes for building AI agents with high-quality search, research and information retrieval using Valyu.
+Explore a vast library of practical, open-source example recipes to build awesome solutions with Valyu APIs as fast as possible. Practical, production-ready recipes for building AI agents with high-quality search, research and information retrieval using Valyu.
 
 ## What you'll learn
 - How to search financial, academic, patent, and web data
