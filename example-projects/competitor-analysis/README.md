@@ -4,6 +4,8 @@ A competitor analysis tool built with Next.js and [Valyu Deep Research API](http
 
 Get comprehensive insights about any competitor with detailed reports on products, market positioning, and strategy.
 
+Try it [live now!](https://competitor-analysis.valyu.ai)
+
 ![Competitor Analysis](https://github.com/user-attachments/assets/cae558db-f533-4bbc-bf4c-3d033d8dc924)
 
 ## Features
