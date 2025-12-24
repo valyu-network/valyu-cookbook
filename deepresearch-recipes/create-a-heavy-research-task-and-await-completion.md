@@ -4,6 +4,7 @@ Use `heavy` mode for complex research.
 
 First step, create a research task and use the `heavy` model.
 
+_TypeScript_
 ```ts
 import { Valyu } from "valyu-js";
 
@@ -21,6 +22,7 @@ console.log(`Status: ${task.status}`);
 
 Second step, wait for completion of the task
 
+_TypeScript_
 ```ts
 // Wait for the task to complete
 const result = await valyu.deepresearch.wait(task.deepresearch_id, {
@@ -41,6 +43,7 @@ if (result.status === "completed") {
 }
 ```
 
+_Python_
 ```python
 # Wait for the task to complete
 result = valyu.deepresearch.wait(
