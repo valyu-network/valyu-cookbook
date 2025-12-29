@@ -14,15 +14,15 @@ We have a [great quickstart on our docs](https://docs.valyu.ai/quickstart) for y
 
 ## Real World Examples
 
-![History](https://github.com/user-attachments/assets/694994d1-a678-41e2-b4a2-425943adda2b)
+![History](https://4ealzrotsszllxtz.public.blob.vercel-storage.com/history-1400x792.png)
 [History](https://history.valyu.ai) | [GitHub](https://github.com/yorkeccak/history)
-![PatentAI](https://github.com/user-attachments/assets/bce0cc9f-b1a3-4d09-97e9-afe2a78cad97)
+![PatentAI](https://4ealzrotsszllxtz.public.blob.vercel-storage.com/patentai-1400x792.png)
 [Patents](https://patents.valyu.ai) | [GitHub](https://github.com/yorkeccak/patents)
 ![Polyseer](https://github.com/user-attachments/assets/3a4f1bfb-3d38-4185-84fe-06c2b97f5d86)
 [Polyseer](https://polyseer.xyz) | [GitHub](https://github.com/yorkeccak/polyseer)
-![Bio](https://github.com/user-attachments/assets/269af5fa-284a-4728-af02-8e89acc837e1)
+![Bio](https://4ealzrotsszllxtz.public.blob.vercel-storage.com/bio-1400x795.png)
 [Bio](https://bio.valyu.ai) | [GitHub](https://github.com/yorkeccak/bio)
-![Finance](https://github.com/user-attachments/assets/6971b697-d108-4187-b9e0-af9f6b8157a9)
+![Finance](https://4ealzrotsszllxtz.public.blob.vercel-storage.com/finance-1400x794.png)
 [Finance](https://finance.valyu.ai) | [GitHub](https://github.com/yorkeccak/finance)
 
 
