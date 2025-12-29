@@ -18,7 +18,7 @@ We have a [great quickstart on our docs](https://docs.valyu.ai/quickstart) for y
 [History](https://history.valyu.ai) | [GitHub](https://github.com/yorkeccak/history)
 ![PatentAI](https://4ealzrotsszllxtz.public.blob.vercel-storage.com/patentai-1400x792.png)
 [Patents](https://patents.valyu.ai) | [GitHub](https://github.com/yorkeccak/patents)
-![Polyseer](https://github.com/user-attachments/assets/3a4f1bfb-3d38-4185-84fe-06c2b97f5d86)
+![Polyseer](https://4ealzrotsszllxtz.public.blob.vercel-storage.com/Screenshot%202025-12-29%20at%2017.38.56-1400x752.png)
 [Polyseer](https://polyseer.xyz) | [GitHub](https://github.com/yorkeccak/polyseer)
 ![Bio](https://4ealzrotsszllxtz.public.blob.vercel-storage.com/bio-1400x795.png)
 [Bio](https://bio.valyu.ai) | [GitHub](https://github.com/yorkeccak/bio)
