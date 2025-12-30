@@ -2,7 +2,11 @@
 
 Get instant, AI-powered briefings on any topic before your meeting. Enter a meeting topic or company name and receive a comprehensive 2-minute briefing with the latest news, key developments, and talking points.
 
-![Intel Espresso](https://4ealzrotsszllxtz.public.blob.vercel-storage.com/intelespresso.gif)
+![Intel Espresso](https://4ealzrotsszllxtz.public.blob.vercel-storage.com/first_screenshot)
+
+![Intel Espresso](https://4ealzrotsszllxtz.public.blob.vercel-storage.com/screenshot2)
+
+![Intel Espresso](https://4ealzrotsszllxtz.public.blob.vercel-storage.com/third_screenshot)
 
 ## Features
 
