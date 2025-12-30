@@ -60,15 +60,16 @@ export default function SignInModal({ isOpen, onClose, topic }: SignInModalProps
     // Build the OAuth URL using Supabase OAuth endpoints
     const supabaseUrl = process.env.NEXT_PUBLIC_VALYU_SUPABASE_URL;
     const clientId = process.env.NEXT_PUBLIC_VALYU_CLIENT_ID;
+    const redirectUriEnv = process.env.NEXT_PUBLIC_REDIRECT_URI;
 
     // Check if environment variables are configured
-    if (!supabaseUrl || !clientId) {
+    if (!supabaseUrl || !clientId || !redirectUriEnv) {
       console.error("OAuth environment variables not configured");
       alert("OAuth is not configured. Please contact support.");
       return;
     }
 
-    const redirectUri = encodeURIComponent("https://meeting-prep.valyu.ai/auth/valyu/callback");
+    const redirectUri = encodeURIComponent(redirectUriEnv);
 
     // Construct OAuth URL with PKCE parameters
     const oauthUrl = `${supabaseUrl}/auth/v1/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&state=${state}&code_challenge=${codeChallenge}&code_challenge_method=S256`;
@@ -140,30 +141,7 @@ export default function SignInModal({ isOpen, onClose, topic }: SignInModalProps
             onClick={handleSignIn}
             className="w-full bg-black text-white rounded-lg py-3.5 px-6 font-semibold text-base hover:bg-gray-900 transition-colors flex items-center justify-center gap-3"
           >
-            <span>Sign in with</span>
-            <svg
-              className="h-5"
-              viewBox="0 0 71 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M0 0.5H6.5L11.5 19.5L16.5 0.5H23L14.5 19.5H8.5L0 0.5Z"
-                fill="white"
-              />
-              <path
-                d="M31 0.5H37.5L42 19.5H36L35 15H29L28 19.5H22L31 0.5ZM34 11L32 4L30 11H34Z"
-                fill="white"
-              />
-              <path
-                d="M44 0.5H50V15H58V19.5H44V0.5Z"
-                fill="white"
-              />
-              <path
-                d="M60 0.5H66.5L71 10.5V0.5H66.5V19.5H60L55.5 9.5V19.5H60V0.5Z"
-                fill="white"
-              />
-            </svg>
+            <span>Sign in with Valyu</span>
           </button>
 
           {/* Footer Text */}

@@ -32,7 +32,7 @@ The modal redirects to Valyu's OAuth authorization endpoint:
 ```
 https://[SUPABASE_URL]/auth/v1/oauth/authorize?
   client_id=[CLIENT_ID]&
-  redirect_uri=https://meeting-prep.valyu.ai/auth/valyu/callback&
+  redirect_uri=&
   response_type=code&
   state=[RANDOM_STATE]&
   code_challenge=[CODE_CHALLENGE]&
@@ -59,7 +59,7 @@ The user is redirected to Valyu's platform where they:
 After authorization, Valyu redirects back to:
 
 ```
-https://meeting-prep.valyu.ai/auth/valyu/callback?
+?
   code=[AUTHORIZATION_CODE]&
   state=[STATE]
 ```

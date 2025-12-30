@@ -6,6 +6,13 @@ import MeetingBriefCard from "./MeetingBriefCard";
 import LoadingBrief from "./LoadingBrief";
 import DiscordBanner from "./DiscordBanner";
 import SignInModal from "./SignInModal";
+import Sidebar from "./Sidebar";
+
+interface UserInfo {
+  email: string;
+  name?: string;
+  avatar_url?: string;
+}
 
 export default function MeetingPrepAssistant() {
   const [topic, setTopic] = useState("");
@@ -14,11 +21,30 @@ export default function MeetingPrepAssistant() {
   const [error, setError] = useState<string | null>(null);
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [showSignInModal, setShowSignInModal] = useState(false);
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
 
   useEffect(() => {
     // Check if user has an access token (authenticated via OAuth)
     const accessToken = localStorage.getItem("valyuAccessToken");
     setIsSignedIn(!!accessToken);
+
+    // Fetch user info if authenticated
+    if (accessToken) {
+      fetch("/api/auth/user", {
+        headers: {
+          "Authorization": `Bearer ${accessToken}`,
+        },
+      })
+        .then(async (response) => {
+          if (response.ok) {
+            const data = await response.json();
+            setUserInfo(data);
+          }
+        })
+        .catch((err) => {
+          console.error("Failed to fetch user info:", err);
+        });
+    }
 
     // Check if there's a pending topic (user returned from OAuth)
     const pendingTopic = sessionStorage.getItem("pendingMeetingTopic");
@@ -116,9 +142,37 @@ export default function MeetingPrepAssistant() {
     setError(null);
   };
 
+  const handleLogout = () => {
+    // Clear all authentication data
+    localStorage.removeItem("valyuAccessToken");
+    localStorage.removeItem("valyuRefreshToken");
+    localStorage.removeItem("valyuTokenExpiresAt");
+    sessionStorage.removeItem("pendingMeetingTopic");
+    sessionStorage.removeItem("oauthState");
+    sessionStorage.removeItem("pkceCodeVerifier");
+
+    // Reset state
+    setIsSignedIn(false);
+    setUserInfo(null);
+    setResult(null);
+    setTopic("");
+    setError(null);
+  };
+
+  const handleLoginClick = () => {
+    setShowSignInModal(true);
+  };
+
   return (
     <>
       <DiscordBanner />
+      <Sidebar
+        isSignedIn={isSignedIn}
+        userEmail={userInfo?.email}
+        userAvatarUrl={userInfo?.avatar_url}
+        onLoginClick={handleLoginClick}
+        onLogoutClick={handleLogout}
+      />
       <SignInModal
         isOpen={showSignInModal}
         onClose={() => setShowSignInModal(false)}

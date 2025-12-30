@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify({
         grant_type: "authorization_code",
         code,
-        redirect_uri: "https://meeting-prep.valyu.ai/auth/valyu/callback",
+        redirect_uri: process.env.NEXT_PUBLIC_REDIRECT_URI,
         client_id: process.env.NEXT_PUBLIC_VALYU_CLIENT_ID,
         client_secret: process.env.VALYU_CLIENT_SECRET,
         code_verifier,
