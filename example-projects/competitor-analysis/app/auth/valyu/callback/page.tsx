@@ -1,0 +1,148 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+
+export default function OAuthCallback() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [status, setStatus] = useState<'processing' | 'success' | 'error'>('processing');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    const handleCallback = async () => {
+      const code = searchParams.get('code');
+      const state = searchParams.get('state');
+      const error = searchParams.get('error');
+
+      // Handle OAuth errors
+      if (error) {
+        setStatus('error');
+        setErrorMessage('Authorization failed. Please try again.');
+        setTimeout(() => router.push('/'), 3000);
+        return;
+      }
+
+      // Validate required parameters
+      if (!code || !state) {
+        setStatus('error');
+        setErrorMessage('Invalid callback parameters.');
+        setTimeout(() => router.push('/'), 3000);
+        return;
+      }
+
+      // Validate state (CSRF protection)
+      const storedState = sessionStorage.getItem('oauth_state');
+      if (state !== storedState) {
+        setStatus('error');
+        setErrorMessage('Invalid state parameter. Possible CSRF attack.');
+        setTimeout(() => router.push('/'), 3000);
+        return;
+      }
+
+      // Get code verifier from storage
+      const codeVerifier = sessionStorage.getItem('oauth_code_verifier');
+      if (!codeVerifier) {
+        setStatus('error');
+        setErrorMessage('Code verifier not found. Please try again.');
+        setTimeout(() => router.push('/'), 3000);
+        return;
+      }
+
+      try {
+        // Exchange authorization code for access token
+        const tokenResponse = await fetch('/api/oauth/token', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            code,
+            codeVerifier,
+          }),
+        });
+
+        if (!tokenResponse.ok) {
+          const errorData = await tokenResponse.json();
+          throw new Error(errorData.error || 'Token exchange failed');
+        }
+
+        const { access_token, user } = await tokenResponse.json();
+
+        // Store user info in localStorage
+        localStorage.setItem('valyu_user', JSON.stringify(user));
+        localStorage.setItem('valyu_access_token', access_token);
+
+        // Clean up session storage
+        sessionStorage.removeItem('oauth_code_verifier');
+        sessionStorage.removeItem('oauth_state');
+
+        setStatus('success');
+
+        // Redirect to home page
+        setTimeout(() => {
+          router.push('/?auth=success');
+        }, 1000);
+      } catch (error) {
+        console.error('OAuth callback error:', error);
+        setStatus('error');
+        setErrorMessage(error instanceof Error ? error.message : 'Authentication failed');
+        setTimeout(() => router.push('/'), 3000);
+      }
+    };
+
+    handleCallback();
+  }, [searchParams, router]);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-950 dark:via-blue-950 dark:to-indigo-950 flex items-center justify-center p-4">
+      <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-8 text-center">
+        {status === 'processing' && (
+          <>
+            <div className="w-16 h-16 mx-auto mb-6">
+              <div className="w-16 h-16 border-4 border-blue-200 dark:border-blue-800 border-t-blue-600 dark:border-t-blue-400 rounded-full animate-spin"></div>
+            </div>
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-2">
+              Signing you in...
+            </h2>
+            <p className="text-slate-600 dark:text-slate-400">
+              Please wait while we complete your authentication.
+            </p>
+          </>
+        )}
+
+        {status === 'success' && (
+          <>
+            <div className="w-16 h-16 mx-auto mb-6 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+              <svg className="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-2">
+              Success!
+            </h2>
+            <p className="text-slate-600 dark:text-slate-400">
+              Redirecting you to the app...
+            </p>
+          </>
+        )}
+
+        {status === 'error' && (
+          <>
+            <div className="w-16 h-16 mx-auto mb-6 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center">
+              <svg className="w-8 h-8 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-2">
+              Authentication Failed
+            </h2>
+            <p className="text-slate-600 dark:text-slate-400">
+              {errorMessage}
+            </p>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}

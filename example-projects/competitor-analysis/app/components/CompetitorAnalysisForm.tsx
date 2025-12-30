@@ -2,12 +2,22 @@
 
 import { useState, useRef, useEffect } from 'react';
 
+interface User {
+  id: string;
+  email: string;
+  name?: string;
+  picture?: string;
+  email_verified?: boolean;
+}
+
 interface CompetitorAnalysisFormProps {
   onAnalysisStart: () => void;
   onAnalysisComplete: (result: any) => void;
+  user: User | null;
+  onSignInClick: () => void;
 }
 
-export default function CompetitorAnalysisForm({ onAnalysisStart, onAnalysisComplete }: CompetitorAnalysisFormProps) {
+export default function CompetitorAnalysisForm({ onAnalysisStart, onAnalysisComplete, user, onSignInClick }: CompetitorAnalysisFormProps) {
   const [websiteUrl, setWebsiteUrl] = useState('');
   const [summaryText, setSummaryText] = useState('');
   const [loading, setLoading] = useState(false);
@@ -59,6 +69,13 @@ export default function CompetitorAnalysisForm({ onAnalysisStart, onAnalysisComp
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+
+    // Check if user is logged in
+    if (!user) {
+      onSignInClick();
+      return;
+    }
+
     setLoading(true);
 
     try {
