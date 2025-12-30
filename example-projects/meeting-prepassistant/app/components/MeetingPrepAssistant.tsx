@@ -1,15 +1,59 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MeetingPrepResult } from "@/app/types/meeting-prep";
 import MeetingBriefCard from "./MeetingBriefCard";
 import LoadingBrief from "./LoadingBrief";
+import DiscordBanner from "./DiscordBanner";
+import SignInModal from "./SignInModal";
 
 export default function MeetingPrepAssistant() {
   const [topic, setTopic] = useState("");
   const [result, setResult] = useState<MeetingPrepResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [showSignInModal, setShowSignInModal] = useState(false);
+
+  useEffect(() => {
+    // Check if user has an access token (authenticated via OAuth)
+    const accessToken = localStorage.getItem("valyuAccessToken");
+    setIsSignedIn(!!accessToken);
+
+    // Check if there's a pending topic (user returned from OAuth)
+    const pendingTopic = sessionStorage.getItem("pendingMeetingTopic");
+    if (pendingTopic && accessToken) {
+      setTopic(pendingTopic);
+      sessionStorage.removeItem("pendingMeetingTopic");
+
+      // Auto-generate brief after successful OAuth
+      setIsLoading(true);
+      setError(null);
+      setResult(null);
+
+      fetch("/api/meeting-prep", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({ topic: pendingTopic }),
+      })
+        .then(async (response) => {
+          if (!response.ok) {
+            throw new Error("Failed to generate meeting brief");
+          }
+          const data = await response.json();
+          setResult(data);
+        })
+        .catch((err) => {
+          setError(err instanceof Error ? err.message : "An error occurred");
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,16 +63,33 @@ export default function MeetingPrepAssistant() {
       return;
     }
 
+    // Check if user is signed in
+    if (!isSignedIn) {
+      setShowSignInModal(true);
+      return;
+    }
+
+    await generateBrief();
+  };
+
+  const generateBrief = async () => {
     setIsLoading(true);
     setError(null);
     setResult(null);
 
     try {
+      const accessToken = localStorage.getItem("valyuAccessToken");
+      const headers: HeadersInit = {
+        "Content-Type": "application/json",
+      };
+
+      if (accessToken) {
+        headers["Authorization"] = `Bearer ${accessToken}`;
+      }
+
       const response = await fetch("/api/meeting-prep", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers,
         body: JSON.stringify({ topic: topic.trim() }),
       });
 
@@ -56,8 +117,15 @@ export default function MeetingPrepAssistant() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col py-5 sm:py-7 px-4 bg-white">
-      <div className="max-w-5xl mx-auto flex-grow flex flex-col w-full">
+    <>
+      <DiscordBanner />
+      <SignInModal
+        isOpen={showSignInModal}
+        onClose={() => setShowSignInModal(false)}
+        topic={topic}
+      />
+      <div className="min-h-screen flex flex-col py-5 sm:py-7 px-4 bg-white">
+        <div className="max-w-5xl mx-auto flex-grow flex flex-col w-full">
         {!isLoading && (
           <div className="text-center mb-6">
             <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-3">
@@ -258,5 +326,6 @@ export default function MeetingPrepAssistant() {
         </footer>
       </div>
     </div>
+    </>
   );
 }
