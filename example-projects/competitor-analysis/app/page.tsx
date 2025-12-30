@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import CompetitorAnalysisForm from './components/CompetitorAnalysisForm';
 import ResearchResults from './components/ResearchResults';
@@ -15,7 +15,7 @@ interface User {
   email_verified?: boolean;
 }
 
-export default function Home() {
+function HomeContent() {
   const [analysisResult, setAnalysisResult] = useState<any>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showDiscordBanner, setShowDiscordBanner] = useState(true);
@@ -218,8 +218,20 @@ export default function Home() {
           </div>
         )}
 
-      
+
       </main>
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-950 dark:via-blue-950 dark:to-indigo-950 flex items-center justify-center">
+        <div className="w-16 h-16 border-4 border-blue-200 dark:border-blue-800 border-t-blue-600 dark:border-t-blue-400 rounded-full animate-spin"></div>
+      </div>
+    }>
+      <HomeContent />
+    </Suspense>
   );
 }
