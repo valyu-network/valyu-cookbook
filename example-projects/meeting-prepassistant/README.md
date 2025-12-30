@@ -31,7 +31,7 @@ Get instant, AI-powered briefings on any topic before your meeting. Enter a meet
 ### Prerequisites
 
 - Node.js 18+ installed
-- A Valyu API key (get one at [https://valyu.io](https://valyu.io))
+- A Valyu API key (get one at [https://valyu.ai](https://valyu.ai))
 
 ### Installation
 
