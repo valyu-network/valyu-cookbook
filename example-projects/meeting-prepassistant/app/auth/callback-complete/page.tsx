@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
-export default function CallbackComplete() {
+function CallbackCompleteContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [status, setStatus] = useState<"processing" | "success" | "error">("processing");
@@ -205,5 +205,46 @@ export default function CallbackComplete() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function CallbackComplete() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-white">
+          <div className="text-center max-w-md mx-auto px-4">
+            <div className="space-y-4">
+              <div className="flex justify-center">
+                <svg
+                  className="animate-spin h-12 w-12 text-[#de5833]"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    fill="none"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  />
+                </svg>
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900">
+                Loading...
+              </h2>
+            </div>
+          </div>
+        </div>
+      }
+    >
+      <CallbackCompleteContent />
+    </Suspense>
   );
 }
