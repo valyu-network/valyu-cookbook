@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+:root {
+  --primary: #de5833;
+  --text-primary: #222222;
+  --text-secondary: #666666;
+  --border: #e0e0e0;
+  --bg-secondary: #f7f7f7;
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #ffffff;
+  min-height: 100vh;
+  color: var(--text-primary);
+}
+
+@keyframes loading-bar {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-loading-bar {
+  animation: loading-bar 2s ease-in-out infinite;
+}
