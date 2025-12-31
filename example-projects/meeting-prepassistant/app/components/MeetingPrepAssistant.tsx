@@ -271,19 +271,7 @@ export default function MeetingPrepAssistant() {
                 <li className="flex items-center gap-2.5 p-3 bg-gray-50 rounded-md border border-gray-200">
                   <span className="text-gray-700 font-bold text-base">✓</span>
                   <span className="text-base font-medium text-gray-700">Executive summary</span>
-                </li>
-                <li className="flex items-center gap-2.5 p-3 bg-gray-50 rounded-md border border-gray-200">
-                  <span className="text-gray-700 font-bold text-base">✓</span>
-                  <span className="text-base font-medium text-gray-700">Key developments</span>
-                </li>
-                <li className="flex items-center gap-2.5 p-3 bg-gray-50 rounded-md border border-gray-200">
-                  <span className="text-gray-700 font-bold text-base">✓</span>
-                  <span className="text-base font-medium text-gray-700">Key people</span>
-                </li>
-                <li className="flex items-center gap-2.5 p-3 bg-gray-50 rounded-md border border-gray-200">
-                  <span className="text-gray-700 font-bold text-base">✓</span>
-                  <span className="text-base font-medium text-gray-700">Important dates</span>
-                </li>
+                </li>   
                 <li className="flex items-center gap-2.5 p-3 bg-gray-50 rounded-md border border-gray-200">
                   <span className="text-gray-700 font-bold text-base">✓</span>
                   <span className="text-base font-medium text-gray-700">Talking points</span>
