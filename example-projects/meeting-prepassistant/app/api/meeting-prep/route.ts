@@ -27,8 +27,6 @@ export async function POST(req: NextRequest) {
     const data: any = await valyu.answer(
       `Latest news and key developments about ${topic}`,
       {
-        startDate: formatDate(sevenDaysAgo),
-        endDate: formatDate(today),
         searchType: "news",
         structuredOutput: {
           type: "object",
