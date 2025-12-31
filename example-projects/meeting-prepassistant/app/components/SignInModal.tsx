@@ -118,7 +118,7 @@ export default function SignInModal({ isOpen, onClose, topic }: SignInModalProps
 
           {/* Description */}
           <p className="text-center text-gray-600 leading-relaxed">
-            Valyu is the information backbone of Finance, giving our AI engine access to real-time financial data across markets, SEC filings, and research.
+            Valyu powers our Meeting prep, giving our app real-time access to comprehensive web data, and research from proprietary data sources.
           </p>
 
           {/* Promotional Banner */}
