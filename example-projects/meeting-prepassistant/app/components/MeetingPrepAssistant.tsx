@@ -141,23 +141,11 @@ export default function MeetingPrepAssistant() {
     try {
       const filename = `${topic.trim().replace(/[^a-z0-9]/gi, '_').toLowerCase()}_meeting_brief.pdf`;
 
-      const response = await fetch('/api/generate-pdf', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          result,
-          filename,
-        }),
-      });
+      // Generate PDF on client side using react-pdf
+      const { pdf } = await import('@react-pdf/renderer');
+      const MeetingBriefDocument = (await import('./MeetingBriefDocument')).default;
 
-      if (!response.ok) {
-        throw new Error('Failed to generate PDF');
-      }
-
-      // Get the PDF blob
-      const blob = await response.blob();
+      const blob = await pdf(<MeetingBriefDocument result={result} />).toBlob();
 
       // Create a download link and trigger download
       const url = window.URL.createObjectURL(blob);
