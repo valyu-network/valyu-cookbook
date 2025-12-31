@@ -9,11 +9,10 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@sparticuz/chromium": "^119.0.2",
+    "@react-pdf/renderer": "^4.3.2",
     "@vercel/analytics": "^1.6.1",
     "date-fns": "^4.1.0",
     "next": "16.1.1",
-    "puppeteer-core": "^24.34.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "valyu-js": "^2.3.2"
