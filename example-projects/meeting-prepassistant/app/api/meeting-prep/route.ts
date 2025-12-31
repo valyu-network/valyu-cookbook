@@ -90,7 +90,7 @@ export async function POST(req: NextRequest) {
         })) || [],
     };
 
-    console.log("Executive Summary", result)
+    console.log("Meeting Brief result", result)
 
     return NextResponse.json(result);
   } catch (error) {
