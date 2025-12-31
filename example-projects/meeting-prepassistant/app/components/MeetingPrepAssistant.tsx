@@ -22,6 +22,7 @@ export default function MeetingPrepAssistant() {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [showSignInModal, setShowSignInModal] = useState(false);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
 
   useEffect(() => {
     // Check if user has an access token (authenticated via OAuth)
@@ -132,8 +133,47 @@ export default function MeetingPrepAssistant() {
     }
   };
 
-  const handlePrint = () => {
-    window.print();
+  const handlePrint = async () => {
+    if (!result) return;
+
+    setIsDownloadingPdf(true);
+
+    try {
+      const filename = `${topic.trim().replace(/[^a-z0-9]/gi, '_').toLowerCase()}_meeting_brief.pdf`;
+
+      const response = await fetch('/api/generate-pdf', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          result,
+          filename,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate PDF');
+      }
+
+      // Get the PDF blob
+      const blob = await response.blob();
+
+      // Create a download link and trigger download
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (err) {
+      console.error('PDF generation error:', err);
+      setError('Failed to generate PDF. Please try again.');
+    } finally {
+      setIsDownloadingPdf(false);
+    }
   };
 
   const handleReset = () => {
@@ -312,7 +352,7 @@ export default function MeetingPrepAssistant() {
                 ← Prepare Another Meeting
               </button>
             </div>
-            <MeetingBriefCard result={result} onPrint={handlePrint} />
+            <MeetingBriefCard result={result} onPrint={handlePrint} isDownloadingPdf={isDownloadingPdf} />
           </div>
         )}
 
