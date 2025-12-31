@@ -9,7 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@sparticuz/chromium": "^143.0.0",
+    "@sparticuz/chromium": "^119.0.2",
     "@vercel/analytics": "^1.6.1",
     "date-fns": "^4.1.0",
     "next": "16.1.1",
