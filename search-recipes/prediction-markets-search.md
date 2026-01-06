@@ -72,6 +72,7 @@ Markets spin up fast. When news breaks, prediction markets often appear within h
 
 ```python
 from valyu import Valyu
+import json
 
 valyu = Valyu(api_key="your-key")
 
@@ -81,43 +82,20 @@ response = valyu.search(
     max_num_results=1
 )
 
+print(f"Success: {response.success}")
 if response.results:
     r = response.results[0]
     print(f"Title: {r.title}")
+    print(f"Source: {r.source}")
     print(f"URL: {r.url}")
-    print(f"Volume: ${r.content.get('total_volume', 0):,.2f}")
-    for m in r.content.get('markets', [])[:2]:
-        print(f"  {m['title']}: ", end="")
-        for o in m['outcomes']:
-            print(f"{o['outcome']}={o['probability_pct']}% ", end="")
-        print()
-```
-
-```typescript
-import { Valyu } from "valyu-js";
-
-const valyu = new Valyu("your-key");
-
-const response = await valyu.search(
-  "Super Bowl winner odds",
-  {
-    includedSources: ["valyu/valyu-polymarket"],
-    maxNumResults: 1
-  }
-);
-
-if (response.results.length > 0) {
-  const r = response.results[0];
-  console.log(`Title: ${r.title}`);
-  console.log(`URL: ${r.url}`);
-  console.log(`Volume: $${r.content.total_volume?.toLocaleString()}`);
-}
+    print(f"Content: {json.dumps(r.content, indent=2)}")
 ```
 
 ### Kalshi
 
 ```python
 from valyu import Valyu
+import json
 
 valyu = Valyu(api_key="your-key")
 
@@ -127,36 +105,37 @@ response = valyu.search(
     max_num_results=1
 )
 
+print(f"Success: {response.success}")
 if response.results:
     r = response.results[0]
     print(f"Title: {r.title}")
+    print(f"Source: {r.source}")
     print(f"URL: {r.url}")
-    print(f"Ticker: {r.content.get('event_ticker')}")
-    for m in r.content.get('markets', [])[:2]:
-        print(f"  {m['title']}: ", end="")
-        for o in m['outcomes']:
-            print(f"{o['outcome']}={o['probability_pct']}% ", end="")
-        print()
+    print(f"Content: {json.dumps(r.content, indent=2)}")
 ```
 
-```typescript
-import { Valyu } from "valyu-js";
+### Natural Language Routing
 
-const valyu = new Valyu("your-key");
+No source filter needed - Valyu routes to prediction markets via natural language.
 
-const response = await valyu.search(
-  "Bitcoin price prediction",
-  {
-    includedSources: ["valyu/valyu-kalshi"],
-    maxNumResults: 1
-  }
-);
+```python
+from valyu import Valyu
+import json
 
-if (response.results.length > 0) {
-  const r = response.results[0];
-  console.log(`Title: ${r.title}`);
-  console.log(`Ticker: ${r.content.event_ticker}`);
-}
+valyu = Valyu(api_key="your-key")
+
+response = valyu.search(
+    "Get odds from Polymarket on Democrats winning 2028 presidential election",
+    max_num_results=1
+)
+
+print(f"Success: {response.success}")
+if response.results:
+    r = response.results[0]
+    print(f"Title: {r.title}")
+    print(f"Source: {r.source}")
+    print(f"URL: {r.url}")
+    print(f"Content: {json.dumps(r.content, indent=2)}")
 ```
 
 ---
