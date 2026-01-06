@@ -55,7 +55,7 @@ We integrated Polymarket and Kalshi into the Valyu Search API. Ask questions in 
 | Category | Examples |
 | --- | --- |
 | Economics | Fed rate decisions, CPI prints, unemployment, recession odds |
-| Finance | Asset price targets, ETF approvals, M&A outcomes |
+| Finance | Earnings predictions, asset price targets, ETF approvals, M&A outcomes |
 | Geopolitics | Ceasefire probabilities, leadership changes, territorial disputes |
 | Technology | Product launches, acquisitions, regulatory rulings |
 | Sports | NFL, NBA, MLB outcomes |
@@ -68,7 +68,7 @@ Markets spin up fast. When news breaks, prediction markets often appear within h
 
 ## Targeting Specific Markets
 
-### Polymarket
+### Polymarket - Earnings Predictions
 
 ```python
 from valyu import Valyu
@@ -77,7 +77,7 @@ import json
 valyu = Valyu(api_key="your-key")
 
 response = valyu.search(
-    "Super Bowl winner odds",
+    "Get earnings odds from Polymarket",
     included_sources=["valyu/valyu-polymarket"],
     max_num_results=1
 )
