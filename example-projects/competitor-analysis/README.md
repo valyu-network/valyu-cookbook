@@ -6,7 +6,12 @@ Get comprehensive insights about any competitor with detailed reports on product
 
 Try it [live now!](https://competitor-analysis.valyu.ai)
 
-![Competitor Analysis](https://github.com/user-attachments/assets/cae558db-f533-4bbc-bf4c-3d033d8dc924)
+![Competitor Analysis](https://4ealzrotsszllxtz.public.blob.vercel-storage.com/Screenshot%202026-01-07%20at%2016.14.05.png)
+
+![Processing result](https://4ealzrotsszllxtz.public.blob.vercel-storage.com/Screenshot%202026-01-07%20at%2016.07.42.png)
+
+![Search results](https://4ealzrotsszllxtz.public.blob.vercel-storage.com/Screenshot%202026-01-07%20at%2016.13.41.png)
+
 
 ## Features
 
@@ -69,23 +74,37 @@ Navigate to [http://localhost:3000](http://localhost:3000)
 ```
 app/
 ├── api/
-│   └── competitor-analysis/
-│       ├── route.ts          # API endpoint for creating research tasks
-│       └── status/
-│           └── route.ts      # API endpoint for checking task status and progress
+│   ├── competitor-analysis/
+│   │   ├── route.ts              # API endpoint for creating research tasks
+│   │   ├── cancel/
+│   │   │   └── route.ts          # API endpoint for cancelling research tasks
+│   │   └── status/
+│   │       └── route.ts          # API endpoint for checking task status and progress
+│   └── oauth/
+│       └── token/
+│           └── route.ts          # OAuth token exchange endpoint
+├── auth/
+│   └── valyu/
+│       └── callback/
+│           └── page.tsx          # OAuth callback handler page
 ├── components/
-│   ├── CompetitorAnalysisForm.tsx   # Input form with polling logic
-│   └── ResearchResults.tsx          # Results display with loading states
+│   ├── CompetitorAnalysisForm.tsx    # Input form with polling logic
+│   ├── ResearchResults.tsx           # Results display with loading states
+│   ├── Sidebar.tsx                   # Navigation sidebar component
+│   ├── SignInModal.tsx               # Authentication modal
+│   └── UserProfile.tsx               # User profile display component
 ├── page.tsx                  # Main homepage with side-by-side layout
-├── layout.tsx               # Root layout
-└── globals.css              # Global styles and animations
+├── layout.tsx                # Root layout
+└── globals.css               # Global styles and animations
+lib/
+└── oauth.ts                  # OAuth utility functions
 ```
 
 ## API Configuration
 
 The deep research API is configured in [route.ts](app/api/competitor-analysis/route.ts):
 
-- **Model**: `fast` (~5 min) - Can change to `lite` (10-20 min) or `heavy` (up to 90 min)
+- **Model**: `fast` (~5 min) - Can change to `standard` (10-20 min) or `heavy` (up to 90 min)
 - **Architecture**: Asynchronous with client-side polling (no server timeouts!)
 - **Poll Interval**: Checks status every 10 seconds
 - **Output Formats**: Markdown and PDF
