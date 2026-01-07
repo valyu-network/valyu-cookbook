@@ -17,6 +17,32 @@ interface SidebarProps {
   user: User | null;
 }
 
+// Avatar component with error handling
+function UserAvatar({ user, size = 'sm' }: { user: User; size?: 'sm' | 'md' }) {
+  const [imgError, setImgError] = useState(false);
+
+  const sizeClasses = size === 'sm'
+    ? 'w-7 h-7 text-sm'
+    : 'w-9 h-9 text-sm';
+
+  if (user.picture && !imgError) {
+    return (
+      <img
+        src={user.picture}
+        alt={user.name || user.email}
+        className={`${sizeClasses} rounded-full object-cover`}
+        onError={() => setImgError(true)}
+      />
+    );
+  }
+
+  return (
+    <div className={`${sizeClasses} rounded-full bg-[var(--foreground)] flex items-center justify-center text-[var(--background)] font-medium`}>
+      {user.email[0].toUpperCase()}
+    </div>
+  );
+}
+
 export default function Sidebar({ onSignInClick, user }: SidebarProps) {
   const [showUserMenu, setShowUserMenu] = useState(false);
 
@@ -29,29 +55,19 @@ export default function Sidebar({ onSignInClick, user }: SidebarProps) {
 
   return (
     <div className="fixed left-6 top-1/2 -translate-y-1/2 z-40">
-      <div className="flex flex-col gap-0 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-full p-4 shadow-lg">
+      <div className="flex flex-col gap-1 bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg p-2 shadow-notion-sm">
         {/* User Avatar (if logged in) or Lock Icon (if not logged in) */}
         <div className="relative">
           <button
             onClick={() => user ? setShowUserMenu(!showUserMenu) : onSignInClick()}
-            className="w-14 h-14 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors group"
+            className="w-10 h-10 flex items-center justify-center rounded-md hover:bg-[var(--hover-bg)] transition-notion"
             aria-label={user ? 'User menu' : 'Sign in with Valyu'}
           >
             {user ? (
-              user.picture ? (
-                <img
-                  src={user.picture}
-                  alt={user.name || user.email}
-                  className="w-10 h-10 rounded-full object-cover ring-2 ring-transparent group-hover:ring-blue-600 dark:group-hover:ring-blue-400 transition-all"
-                />
-              ) : (
-                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center text-white font-semibold text-lg ring-2 ring-transparent group-hover:ring-blue-600 dark:group-hover:ring-blue-400 transition-all">
-                  {user.email[0].toUpperCase()}
-                </div>
-              )
+              <UserAvatar user={user} size="sm" />
             ) : (
               <svg
-                className="w-6 h-6 text-slate-600 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors"
+                className="w-5 h-5 text-[var(--foreground-secondary)]"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -59,7 +75,7 @@ export default function Sidebar({ onSignInClick, user }: SidebarProps) {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2}
+                  strokeWidth={1.5}
                   d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
                 />
               </svg>
@@ -76,25 +92,15 @@ export default function Sidebar({ onSignInClick, user }: SidebarProps) {
               ></div>
 
               {/* Menu */}
-              <div className="absolute left-full ml-4 top-0 w-64 bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden z-40">
-                <div className="p-4 border-b border-slate-200 dark:border-slate-700">
+              <div className="absolute left-full ml-2 top-0 w-56 bg-[var(--card-bg)] rounded-lg shadow-notion border border-[var(--border-color)] overflow-hidden z-40">
+                <div className="p-3 border-b border-[var(--border-color)]">
                   <div className="flex items-center gap-3">
-                    {user.picture ? (
-                      <img
-                        src={user.picture}
-                        alt={user.name || user.email}
-                        className="w-12 h-12 rounded-full"
-                      />
-                    ) : (
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center text-white font-semibold text-lg">
-                        {user.email[0].toUpperCase()}
-                      </div>
-                    )}
+                    <UserAvatar user={user} size="md" />
                     <div className="flex-1 min-w-0">
-                      <div className="font-semibold text-slate-900 dark:text-slate-100 truncate">
+                      <div className="text-sm font-medium text-[var(--foreground)] truncate">
                         {user.name || user.email.split('@')[0]}
                       </div>
-                      <div className="text-xs text-slate-500 dark:text-slate-400 truncate">
+                      <div className="text-xs text-[var(--foreground-tertiary)] truncate">
                         {user.email}
                       </div>
                     </div>
@@ -103,10 +109,10 @@ export default function Sidebar({ onSignInClick, user }: SidebarProps) {
 
                 <button
                   onClick={handleSignOut}
-                  className="w-full px-4 py-3 text-left text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors flex items-center gap-2"
+                  className="w-full px-3 py-2 text-left text-sm text-[#EB5757] hover:bg-[var(--hover-bg)] transition-notion flex items-center gap-2"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                   </svg>
                   Sign out
                 </button>
@@ -116,20 +122,20 @@ export default function Sidebar({ onSignInClick, user }: SidebarProps) {
         </div>
 
         {/* Divider */}
-        <div className="w-full h-px bg-slate-200 dark:bg-slate-700 my-2"></div>
+        <div className="w-full h-px bg-[var(--border-color)] my-1"></div>
 
         {/* Valyu Logo - Home */}
         <a
           href="/"
-          className="w-14 h-14 flex items-center justify-center rounded-xl bg-black dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors group"
+          className="w-10 h-10 flex items-center justify-center rounded-md bg-black hover:bg-black/90 transition-notion"
           aria-label="Home"
         >
           <Image
               src="/nabla.png"
               alt="Home"
-              width={28}
-              height={28}
-              className="rounded-lg"
+              width={22}
+              height={22}
+              className="rounded"
           />
         </a>
       </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, Suspense, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import CompetitorAnalysisForm from './components/CompetitorAnalysisForm';
 import ResearchResults from './components/ResearchResults';
@@ -22,7 +22,22 @@ function HomeContent() {
   const [showSignInModal, setShowSignInModal] = useState(false);
   const [showAuthSuccess, setShowAuthSuccess] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [websiteUrl, setWebsiteUrl] = useState('https://');
+  const [summaryText, setSummaryText] = useState('');
+  const [currentTaskId, setCurrentTaskId] = useState<string | null>(null);
+  const [isCancelling, setIsCancelling] = useState(false);
+  const cancelledRef = useRef(false);
+  const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const searchParams = useSearchParams();
+
+  // Cleanup polling on unmount
+  useEffect(() => {
+    return () => {
+      if (pollIntervalRef.current) {
+        clearInterval(pollIntervalRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     // Load user from localStorage
@@ -56,21 +71,99 @@ function HomeContent() {
     }
   }, [searchParams]);
 
-  const handleAnalysisStart = () => {
-    setIsAnalyzing(true);
+  const pollStatus = async (taskId: string) => {
+    // Don't poll if cancelled
+    if (cancelledRef.current) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/competitor-analysis/status?taskId=${taskId}`);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to check status');
+      }
+
+      // Ignore results if cancelled during fetch
+      if (cancelledRef.current) {
+        return;
+      }
+
+      setAnalysisResult(data);
+
+      // If completed, stop polling
+      if (data.status === 'completed' || data.status === 'failed' || data.status === 'cancelled') {
+        if (pollIntervalRef.current) {
+          clearInterval(pollIntervalRef.current);
+          pollIntervalRef.current = null;
+        }
+        if (data.status !== 'completed') {
+          setIsAnalyzing(false);
+        }
+      }
+    } catch (err) {
+      console.error('Polling error:', err);
+      // Don't stop polling on temporary errors
+    }
   };
 
-  const handleAnalysisComplete = (result: any) => {
-    setAnalysisResult(result);
+  const handleTaskCreated = (taskId: string) => {
+    cancelledRef.current = false;
+    setIsAnalyzing(true);
+    setCurrentTaskId(taskId);
+
+    // Poll immediately
+    pollStatus(taskId);
+
+    // Then poll every 10 seconds
+    pollIntervalRef.current = setInterval(() => {
+      pollStatus(taskId);
+    }, 10000);
   };
 
   const handleReset = () => {
+    if (pollIntervalRef.current) {
+      clearInterval(pollIntervalRef.current);
+      pollIntervalRef.current = null;
+    }
     setAnalysisResult(null);
     setIsAnalyzing(false);
+    setCurrentTaskId(null);
+    setIsCancelling(false);
+    // Clear form inputs
+    setWebsiteUrl('https://');
+    setSummaryText('');
+  };
+
+  const handleCancel = async () => {
+    // Mark as cancelled immediately to ignore any in-flight poll results
+    cancelledRef.current = true;
+
+    if (!currentTaskId) {
+      // If no task ID yet, just reset
+      handleReset();
+      return;
+    }
+
+    setIsCancelling(true);
+    try {
+      await fetch('/api/competitor-analysis/cancel', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ taskId: currentTaskId }),
+      });
+    } catch (error) {
+      console.error('Failed to cancel task:', error);
+    }
+    // Reset state and go back to homepage regardless of API result
+    handleReset();
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-950 dark:via-blue-950 dark:to-indigo-950 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className="min-h-screen bg-[var(--background)] py-16 px-6 sm:px-8 lg:px-12">
       {/* Sidebar */}
       <Sidebar onSignInClick={() => setShowSignInModal(true)} user={user} />
 
@@ -79,18 +172,18 @@ function HomeContent() {
 
       {/* Authentication Success Notification */}
       {showAuthSuccess && (
-        <div className="fixed top-20 right-4 z-50 animate-in slide-in-from-top">
-          <div className="bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded-xl px-6 py-4 shadow-lg flex items-center gap-3">
-            <div className="w-8 h-8 bg-green-100 dark:bg-green-900/50 rounded-full flex items-center justify-center">
-              <svg className="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="fixed top-6 right-6 z-50">
+          <div className="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg px-5 py-4 shadow-notion flex items-center gap-3">
+            <div className="w-6 h-6 rounded-full bg-[#DBEDDB] flex items-center justify-center">
+              <svg className="w-3.5 h-3.5 text-[#0F7B6C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
             <div>
-              <div className="font-semibold text-green-900 dark:text-green-100">
-                Successfully signed in!
+              <div className="text-sm font-medium text-[var(--foreground)]">
+                Successfully signed in
               </div>
-              <div className="text-sm text-green-700 dark:text-green-300">
+              <div className="text-xs text-[var(--foreground-secondary)]">
                 Welcome to Valyu Competitor Analysis
               </div>
             </div>
@@ -98,20 +191,20 @@ function HomeContent() {
         </div>
       )}
 
-      {/* Discord Banner - Top Left */}
+      {/* Discord Banner - Minimal Notion style */}
       {showDiscordBanner && (
-        <div className="fixed top-4 left-4 z-50">
+        <div className="fixed top-4 left-6 z-50">
           <a
             href="https://discord.gg/BhUWrFbHRa"
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-2.5 px-4 py-2.5 bg-[#5865F2] hover:bg-[#4752C4] text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-medium text-sm"
+            className="group flex items-center gap-2.5 px-4 py-2.5 bg-[#5865F2] hover:bg-[#4752C4] text-white rounded-lg shadow-notion-sm transition-notion text-sm"
           >
             {/* Discord Icon */}
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
               <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
             </svg>
-            <span>Join the Valyu Discord</span>
+            <span className="font-medium">Join our Discord</span>
 
             {/* Close button */}
             <button
@@ -120,10 +213,10 @@ function HomeContent() {
                 e.stopPropagation();
                 setShowDiscordBanner(false);
               }}
-              className="ml-1 p-0.5 hover:bg-white/20 rounded-full transition-colors"
+              className="ml-1 p-1 hover:bg-white/20 rounded transition-notion"
               aria-label="Close"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -131,33 +224,24 @@ function HomeContent() {
         </div>
       )}
 
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 -left-20 w-72 h-72 bg-blue-400/20 dark:bg-blue-500/10 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute top-1/3 -right-20 w-96 h-96 bg-indigo-400/20 dark:bg-indigo-500/10 rounded-full blur-3xl animate-float delay-150"></div>
-        <div className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-purple-400/20 dark:bg-purple-500/10 rounded-full blur-3xl animate-float delay-75"></div>
-      </div>
-
-      <main className="max-w-7xl mx-auto relative z-10">
+      <main className="max-w-6xl mx-auto">
         {/* Main Content */}
         {!isAnalyzing && !analysisResult ? (
-          // Centered layout before analysis starts
+          // Centered layout before analysis starts - Notion style with lots of whitespace
           <>
-            {/* Header - Centered */}
-            <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass-effect shadow-lg mb-8 transition-smooth hover:shadow-xl">
-                <svg className="w-5 h-5 text-blue-600 dark:text-blue-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            {/* Header - Centered with Notion typography */}
+            <div className="text-center mb-16 pt-8">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-[var(--background-secondary)] text-[var(--foreground-secondary)] text-xs font-medium mb-8">
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
-                <span className="text-sm font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
-                  Powered by Valyu Deep Research
-                </span>
+                <span>Powered by Valyu Deep Research</span>
               </div>
 
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 dark:from-slate-100 dark:via-blue-100 dark:to-indigo-100 bg-clip-text text-transparent mb-6 tracking-tight leading-tight">
+              <h1 className="text-4xl sm:text-5xl font-bold text-[var(--foreground)] mb-4 tracking-tight">
                 Competitor Analysis
               </h1>
-              <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-lg text-[var(--foreground-secondary)] max-w-2xl mx-auto leading-relaxed">
                 Get comprehensive insights about any competitor with AI-powered deep research.
                 Analyzes multiple sources to provide detailed reports on products, market positioning, and strategy.
               </p>
@@ -166,44 +250,49 @@ function HomeContent() {
             {/* Centered form */}
             <div className="flex justify-center">
               <CompetitorAnalysisForm
-                onAnalysisStart={handleAnalysisStart}
-                onAnalysisComplete={handleAnalysisComplete}
+                onTaskCreated={handleTaskCreated}
                 user={user}
                 onSignInClick={() => setShowSignInModal(true)}
+                websiteUrl={websiteUrl}
+                setWebsiteUrl={setWebsiteUrl}
+                summaryText={summaryText}
+                setSummaryText={setSummaryText}
+                isAnalyzing={isAnalyzing}
               />
             </div>
           </>
         ) : (
           // Side by Side Layout after analysis starts
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             {/* Left Column - Header + Form */}
-            <div className="w-full space-y-6 lg:col-span-4">
+            <div className="w-full space-y-8 lg:col-span-4">
               {/* Header - Left aligned */}
               <div>
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-effect shadow-md mb-5 transition-smooth hover:shadow-lg">
-                  <svg className="w-4 h-4 text-blue-600 dark:text-blue-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-[var(--background-secondary)] text-[var(--foreground-secondary)] text-xs font-medium mb-6">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
-                  <span className="text-xs font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
-                    Powered by Valyu Deep Research
-                  </span>
+                  <span>Powered by Valyu Deep Research</span>
                 </div>
 
-                <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 dark:from-slate-100 dark:via-blue-100 dark:to-indigo-100 bg-clip-text text-transparent mb-4 tracking-tight leading-tight">
+                <h1 className="text-2xl sm:text-3xl font-bold text-[var(--foreground)] mb-3 tracking-tight">
                   Competitor Analysis
                 </h1>
-                <p className="text-base text-slate-600 dark:text-slate-400 leading-relaxed">
+                <p className="text-[var(--foreground-secondary)] leading-relaxed">
                   Get comprehensive insights about any competitor with AI-powered deep research.
-                  Analyzes multiple sources to provide detailed reports on products, market positioning, and strategy.
                 </p>
               </div>
 
               {/* Form */}
               <CompetitorAnalysisForm
-                onAnalysisStart={handleAnalysisStart}
-                onAnalysisComplete={handleAnalysisComplete}
+                onTaskCreated={handleTaskCreated}
                 user={user}
                 onSignInClick={() => setShowSignInModal(true)}
+                websiteUrl={websiteUrl}
+                setWebsiteUrl={setWebsiteUrl}
+                summaryText={summaryText}
+                setSummaryText={setSummaryText}
+                isAnalyzing={isAnalyzing}
               />
             </div>
 
@@ -213,12 +302,12 @@ function HomeContent() {
                 result={analysisResult}
                 isLoading={isAnalyzing && !analysisResult}
                 onReset={handleReset}
+                onCancel={handleCancel}
+                isCancelling={isCancelling}
               />
             </div>
           </div>
         )}
-
-
       </main>
     </div>
   );
@@ -227,8 +316,14 @@ function HomeContent() {
 export default function Home() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-950 dark:via-blue-950 dark:to-indigo-950 flex items-center justify-center">
-        <div className="w-16 h-16 border-4 border-blue-200 dark:border-blue-800 border-t-blue-600 dark:border-t-blue-400 rounded-full animate-spin"></div>
+      <div className="min-h-screen bg-[var(--background)] flex items-center justify-center">
+        <div className="flex items-center gap-3 text-[var(--foreground-secondary)]">
+          <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <span className="text-sm">Loading...</span>
+        </div>
       </div>
     }>
       <HomeContent />
