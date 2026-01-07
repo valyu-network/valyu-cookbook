@@ -62,7 +62,7 @@ export default function SignInModal({ isOpen, onClose }: SignInModalProps) {
             {/* Sign In Button */}
             <button
               onClick={handleSignIn}
-              className="w-full bg-[var(--foreground)] hover:bg-[var(--foreground)]/90 text-[var(--background)] font-medium py-2.5 px-4 rounded-md transition-notion flex items-center justify-center gap-2 mb-3 text-sm"
+              className="w-full bg-[var(--primary)] hover:bg-[var(--primary)]/90 text-[var(--primary-foreground)] font-medium py-2.5 px-4 rounded-md transition-notion flex items-center justify-center gap-2 mb-3 text-sm"
             >
               <span>Sign in with Valyu</span>
             </button>

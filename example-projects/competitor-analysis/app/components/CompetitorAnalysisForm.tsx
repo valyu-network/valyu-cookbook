@@ -129,7 +129,7 @@ export default function CompetitorAnalysisForm({
         <button
           type="submit"
           disabled={loading}
-          className="w-full px-4 py-2.5 rounded-md bg-[var(--foreground)] hover:bg-[var(--foreground)]/90 disabled:bg-[var(--foreground-tertiary)] text-[var(--background)] font-medium transition-notion disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm"
+          className="w-full px-4 py-2.5 rounded-md bg-[var(--primary)] hover:bg-[var(--primary)]/90 disabled:bg-[var(--foreground-tertiary)] text-[var(--primary-foreground)] font-medium transition-notion disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm"
         >
           {loading ? (
             <>
