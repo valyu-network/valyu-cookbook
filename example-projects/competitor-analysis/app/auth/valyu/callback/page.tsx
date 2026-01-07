@@ -97,17 +97,17 @@ function OAuthCallbackContent() {
   }, [searchParams, router]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-950 dark:via-blue-950 dark:to-indigo-950 flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-8 text-center">
+    <div className="min-h-screen bg-[var(--background)] flex items-center justify-center p-4">
+      <div className="max-w-md w-full bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg shadow-notion p-8 text-center">
         {status === 'processing' && (
           <>
             <div className="w-16 h-16 mx-auto mb-6">
-              <div className="w-16 h-16 border-4 border-blue-200 dark:border-blue-800 border-t-blue-600 dark:border-t-blue-400 rounded-full animate-spin"></div>
+              <div className="w-16 h-16 border-4 border-[var(--border-color)] border-t-[var(--primary)] rounded-full animate-spin"></div>
             </div>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-2">
+            <h2 className="text-xl font-semibold text-[var(--foreground)] mb-2">
               Signing you in...
             </h2>
-            <p className="text-slate-600 dark:text-slate-400">
+            <p className="text-sm text-[var(--foreground-secondary)]">
               Please wait while we complete your authentication.
             </p>
           </>
@@ -115,15 +115,15 @@ function OAuthCallbackContent() {
 
         {status === 'success' && (
           <>
-            <div className="w-16 h-16 mx-auto mb-6 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
-              <svg className="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-16 h-16 mx-auto mb-6 bg-[var(--accent-green-bg)] rounded-full flex items-center justify-center">
+              <svg className="w-8 h-8 text-[var(--accent-green)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-2">
+            <h2 className="text-xl font-semibold text-[var(--foreground)] mb-2">
               Success!
             </h2>
-            <p className="text-slate-600 dark:text-slate-400">
+            <p className="text-sm text-[var(--foreground-secondary)]">
               Redirecting you to the app...
             </p>
           </>
@@ -131,15 +131,15 @@ function OAuthCallbackContent() {
 
         {status === 'error' && (
           <>
-            <div className="w-16 h-16 mx-auto mb-6 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center">
-              <svg className="w-8 h-8 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-16 h-16 mx-auto mb-6 bg-[var(--accent-red-bg)] rounded-full flex items-center justify-center">
+              <svg className="w-8 h-8 text-[var(--accent-red)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-2">
+            <h2 className="text-xl font-semibold text-[var(--foreground)] mb-2">
               Authentication Failed
             </h2>
-            <p className="text-slate-600 dark:text-slate-400">
+            <p className="text-sm text-[var(--foreground-secondary)]">
               {errorMessage}
             </p>
           </>
@@ -152,12 +152,12 @@ function OAuthCallbackContent() {
 export default function OAuthCallback() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-950 dark:via-blue-950 dark:to-indigo-950 flex items-center justify-center p-4">
-        <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-8 text-center">
+      <div className="min-h-screen bg-[var(--background)] flex items-center justify-center p-4">
+        <div className="max-w-md w-full bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg shadow-notion p-8 text-center">
           <div className="w-16 h-16 mx-auto mb-6">
-            <div className="w-16 h-16 border-4 border-blue-200 dark:border-blue-800 border-t-blue-600 dark:border-t-blue-400 rounded-full animate-spin"></div>
+            <div className="w-16 h-16 border-4 border-[var(--border-color)] border-t-[var(--primary)] rounded-full animate-spin"></div>
           </div>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-2">
+          <h2 className="text-xl font-semibold text-[var(--foreground)] mb-2">
             Loading...
           </h2>
         </div>
