@@ -14,11 +14,18 @@
 
   /* Notion Accent Colors (warm, no blue/purple) */
   --accent-red: #EB5757;
+  --accent-red-bg: #FDEBEC;
   --accent-orange: #FA9F47;
   --accent-yellow: #DFAB01;
+  --accent-amber: #E9B44C;
   --accent-green: #0F7B6C;
+  --accent-green-bg: #DBEDDB;
   --accent-brown: #64473A;
   --accent-gray: #9B9A97;
+
+  /* Brand Colors */
+  --discord: #5865F2;
+  --discord-hover: #4752C4;
 
   /* Interactive states */
   --hover-bg: rgba(55, 53, 47, 0.04);

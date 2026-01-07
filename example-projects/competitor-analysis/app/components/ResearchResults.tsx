@@ -98,7 +98,7 @@ export default function ResearchResults({ result, isLoading, onReset, onCancel, 
             <button
               onClick={onCancel}
               disabled={isCancelling}
-              className="px-3 py-1.5 rounded-md text-[#EB5757] hover:bg-[#EB5757]/10 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium transition-notion flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-md text-[var(--accent-red)] hover:bg-[var(--accent-red)]/10 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium transition-notion flex items-center gap-1.5"
             >
               {isCancelling ? (
                 <svg className="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -150,19 +150,19 @@ export default function ResearchResults({ result, isLoading, onReset, onCancel, 
 
               <div className="space-y-2 text-sm text-[var(--foreground-secondary)]">
                 <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 bg-[#0F7B6C] rounded-full"></div>
+                  <div className="w-1.5 h-1.5 bg-[var(--accent-green)] rounded-full"></div>
                   <span>Searching multiple sources</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 bg-[#FA9F47] rounded-full"></div>
+                  <div className="w-1.5 h-1.5 bg-[var(--accent-orange)] rounded-full"></div>
                   <span>Analyzing content</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 bg-[#E9B44C] rounded-full"></div>
+                  <div className="w-1.5 h-1.5 bg-[var(--accent-amber)] rounded-full"></div>
                   <span>Extracting key insights</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 bg-[#9B9A97] rounded-full"></div>
+                  <div className="w-1.5 h-1.5 bg-[var(--accent-gray)] rounded-full"></div>
                   <span>Generating report</span>
                 </div>
               </div>

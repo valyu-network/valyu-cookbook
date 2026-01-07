@@ -47,14 +47,14 @@ export default function SignInModal({ isOpen, onClose }: SignInModalProps) {
             </p>
 
             {/* Free Credits Banner */}
-            <div className="bg-[#DBEDDB] border border-[#0F7B6C]/20 rounded-md p-3 mb-5">
+            <div className="bg-[var(--accent-green-bg)] border border-[var(--accent-green)]/20 rounded-md p-3 mb-5">
               <div className="flex items-center justify-center gap-2 mb-1">
                 <span className="text-lg">🎁</span>
-                <span className="text-sm font-medium text-[#0F7B6C]">
+                <span className="text-sm font-medium text-[var(--accent-green)]">
                   $10 Free Credits
                 </span>
               </div>
-              <p className="text-xs text-[#0F7B6C]/80">
+              <p className="text-xs text-[var(--accent-green)]/80">
                 New accounts get $10 in free search credits. No credit card required.
               </p>
             </div>

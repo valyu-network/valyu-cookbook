@@ -174,8 +174,8 @@ function HomeContent() {
       {showAuthSuccess && (
         <div className="fixed top-6 right-6 z-50">
           <div className="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg px-5 py-4 shadow-notion flex items-center gap-3">
-            <div className="w-6 h-6 rounded-full bg-[#DBEDDB] flex items-center justify-center">
-              <svg className="w-3.5 h-3.5 text-[#0F7B6C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-6 h-6 rounded-full bg-[var(--accent-green-bg)] flex items-center justify-center">
+              <svg className="w-3.5 h-3.5 text-[var(--accent-green)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
@@ -198,7 +198,7 @@ function HomeContent() {
             href="https://discord.gg/BhUWrFbHRa"
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-2.5 px-4 py-2.5 bg-[#5865F2] hover:bg-[#4752C4] text-white rounded-lg shadow-notion-sm transition-notion text-sm"
+            className="group flex items-center gap-2.5 px-4 py-2.5 bg-[var(--discord)] hover:bg-[var(--discord-hover)] text-white rounded-lg shadow-notion-sm transition-notion text-sm"
           >
             {/* Discord Icon */}
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
