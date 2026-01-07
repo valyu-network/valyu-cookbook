@@ -85,13 +85,13 @@ export default function ResearchResults({ result, isLoading, onReset, onCancel, 
   if (isLoading || !result || !result.output) {
     return (
       <div className="w-full">
-        <div className="mb-8 flex items-start justify-between">
+        <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
           <div>
-            <h2 className="text-xl font-semibold text-[var(--foreground)] mb-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-[var(--foreground)] mb-1 sm:mb-2">
               Research in Progress
             </h2>
             <p className="text-sm text-[var(--foreground-secondary)]">
-              Deep research is running. This typically takes 5-10 minutes.
+              Deep research is running. This typically takes ~5 minutes.
             </p>
           </div>
           {onCancel && (
@@ -116,7 +116,7 @@ export default function ResearchResults({ result, isLoading, onReset, onCancel, 
         </div>
 
         {/* Status Card */}
-        <div className="p-6 rounded-lg bg-[var(--card-bg)] border border-[var(--border-color)] shadow-notion-sm">
+        <div className="p-4 sm:p-6 rounded-lg bg-[var(--card-bg)] border border-[var(--border-color)] shadow-notion-sm">
           <div className="flex items-start gap-4">
             <div className="flex-shrink-0">
               <svg className="animate-spin h-5 w-5 text-[var(--foreground-secondary)]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -171,7 +171,7 @@ export default function ResearchResults({ result, isLoading, onReset, onCancel, 
         </div>
 
         {/* Helpful Tips - separate card */}
-        <div className="mt-8 p-6 rounded-lg bg-[var(--background-secondary)] border border-[var(--border-color)]">
+        <div className="mt-6 sm:mt-8 p-4 sm:p-6 rounded-lg bg-[var(--background-secondary)] border border-[var(--border-color)]">
           <h4 className="text-sm font-medium text-[var(--foreground)] mb-3">
             What's happening?
           </h4>
@@ -200,11 +200,11 @@ export default function ResearchResults({ result, isLoading, onReset, onCancel, 
 
   return (
     <div className="w-full">
-      <div className="mb-6 flex items-center justify-between flex-wrap gap-4">
-        <h2 className="text-xl font-semibold text-[var(--foreground)]">
+      <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+        <h2 className="text-lg sm:text-xl font-semibold text-[var(--foreground)]">
           Research Results
         </h2>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           {result.pdf_url ? (
             <button
               onClick={handleDownloadPdf}
@@ -241,9 +241,9 @@ export default function ResearchResults({ result, isLoading, onReset, onCancel, 
       </div>
 
       {/* Main research output */}
-      <div className="rounded-lg bg-[var(--card-bg)] border border-[var(--border-color)] shadow-notion-sm max-h-[calc(100vh-160px)] overflow-y-auto">
+      <div className="rounded-lg bg-[var(--card-bg)] border border-[var(--border-color)] shadow-notion-sm max-h-[calc(100vh-200px)] md:max-h-[calc(100vh-160px)] overflow-y-auto">
         {/* Markdown Report */}
-        <div className="p-8">
+        <div className="p-4 sm:p-6 md:p-8">
           <div className="prose prose-neutral dark:prose-invert max-w-none
             prose-headings:text-[var(--foreground)] prose-headings:font-semibold
             prose-h1:text-2xl prose-h1:mb-4 prose-h1:mt-6 prose-h1:first:mt-0
@@ -266,7 +266,7 @@ export default function ResearchResults({ result, isLoading, onReset, onCancel, 
 
         {/* Sources Section */}
         {result.sources && result.sources.length > 0 && (
-          <div className="px-8 py-6 border-t border-[var(--border-color)] bg-[var(--background-secondary)]">
+          <div className="px-4 sm:px-6 md:px-8 py-4 sm:py-6 border-t border-[var(--border-color)] bg-[var(--background-secondary)]">
             <h3 className="text-sm font-medium mb-4 text-[var(--foreground)] flex items-center gap-2">
               <svg className="w-4 h-4 text-[var(--foreground-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
@@ -306,7 +306,7 @@ export default function ResearchResults({ result, isLoading, onReset, onCancel, 
 
         {/* Usage Metrics Section */}
         {result.usage && (
-          <div className="p-6 border-t border-[var(--border-color)]">
+          <div className="p-4 sm:p-6 border-t border-[var(--border-color)]">
             <h3 className="text-sm font-medium mb-4 text-[var(--foreground)] flex items-center gap-2">
               <svg className="w-4 h-4 text-[var(--foreground-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
