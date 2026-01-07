@@ -54,7 +54,7 @@ export default function Sidebar({ onSignInClick, user }: SidebarProps) {
   };
 
   return (
-    <div className="fixed left-6 top-1/2 -translate-y-1/2 z-40">
+    <div className="fixed left-4 md:left-6 top-1/2 -translate-y-1/2 z-40 hidden md:block">
       <div className="flex flex-col gap-1 bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg p-2 shadow-notion-sm">
         {/* User Avatar (if logged in) or Lock Icon (if not logged in) */}
         <div className="relative">

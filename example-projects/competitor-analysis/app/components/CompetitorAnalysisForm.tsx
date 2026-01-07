@@ -164,7 +164,7 @@ export default function CompetitorAnalysisForm({
                 Research in progress
               </p>
               <p className="text-xs text-[var(--foreground-secondary)] mt-1">
-                This typically takes 5-10 minutes. View progress on the right.
+                This typically takes 5-10 minutes. <span className="hidden lg:inline">View progress on the right.</span><span className="lg:hidden">View progress below.</span>
               </p>
             </div>
           </div>
