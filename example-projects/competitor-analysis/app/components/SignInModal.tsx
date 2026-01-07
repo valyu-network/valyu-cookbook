@@ -18,43 +18,43 @@ export default function SignInModal({ isOpen, onClose }: SignInModalProps) {
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 transition-opacity"
+        className="fixed inset-0 bg-black/20 z-50 transition-opacity"
         onClick={onClose}
       ></div>
 
       {/* Modal */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-md w-full p-8 relative animate-in fade-in zoom-in duration-200">
+        <div className="bg-[var(--card-bg)] rounded-lg shadow-notion max-w-sm w-full p-6 relative border border-[var(--border-color)]">
           {/* Close button */}
           <button
             onClick={onClose}
-            className="absolute top-6 right-6 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+            className="absolute top-4 right-4 text-[var(--foreground-tertiary)] hover:text-[var(--foreground-secondary)] transition-notion p-1 hover:bg-[var(--hover-bg)] rounded"
             aria-label="Close"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
 
           {/* Modal Content */}
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
+            <h2 className="text-lg font-semibold text-[var(--foreground)] mb-3">
               Sign in with Valyu
             </h2>
 
-            <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
-              Valyu powers our competitor analysis app with real-time access to comprehensive business intelligence, from market trends and SEC filings to competitive research and industry insights.
+            <p className="text-sm text-[var(--foreground-secondary)] mb-5 leading-relaxed">
+              Valyu powers our competitor analysis app with real-time access to comprehensive business intelligence.
             </p>
 
             {/* Free Credits Banner */}
-            <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-4 mb-6">
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <span className="text-2xl">🎁</span>
-                <span className="text-lg font-bold text-green-700 dark:text-green-400">
+            <div className="bg-[#DBEDDB] border border-[#0F7B6C]/20 rounded-md p-3 mb-5">
+              <div className="flex items-center justify-center gap-2 mb-1">
+                <span className="text-lg">🎁</span>
+                <span className="text-sm font-medium text-[#0F7B6C]">
                   $10 Free Credits
                 </span>
               </div>
-              <p className="text-sm text-green-600 dark:text-green-500">
+              <p className="text-xs text-[#0F7B6C]/80">
                 New accounts get $10 in free search credits. No credit card required.
               </p>
             </div>
@@ -62,12 +62,12 @@ export default function SignInModal({ isOpen, onClose }: SignInModalProps) {
             {/* Sign In Button */}
             <button
               onClick={handleSignIn}
-              className="w-full bg-black dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-black font-semibold py-4 px-6 rounded-xl transition-all duration-200 hover:shadow-lg flex items-center justify-center gap-3 mb-4"
+              className="w-full bg-[var(--foreground)] hover:bg-[var(--foreground)]/90 text-[var(--background)] font-medium py-2.5 px-4 rounded-md transition-notion flex items-center justify-center gap-2 mb-3 text-sm"
             >
               <span>Sign in with Valyu</span>
             </button>
 
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-[var(--foreground-tertiary)]">
               Don't have an account? You can create one during sign-in.
             </p>
           </div>

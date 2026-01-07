@@ -24,12 +24,13 @@ export async function POST(req: NextRequest) {
     - Target market and customer base
     - Competitive advantages and unique value propositions
     - Recent developments and news
-    - Market positioning and strategy`;
+    - Market positioning and strategy
+    - Find other companies or products doing something similar to the competitor`;
 
     // Create deep research task
     const task = await valyu.deepresearch.create({
       input: researchQuery,
-      model: "fast", // Options: "fast" (~5 min), "lite" (10-20 min), "heavy" (up to 90 min)
+      model: "fast", // Options: "fast" (~5 min), "standard" (10-20 min), "heavy" (up to 90 min)
       urls: [websiteurl], // Include the specific website URL for analysis
       outputFormats: ["markdown", "pdf"] // Request markdown and PDF output
     });
