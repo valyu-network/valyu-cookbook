@@ -33,24 +33,7 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* Notion Dark Mode Colors */
-    --background: #191919;
-    --background-secondary: #202020;
-    --foreground: #E3E2DE;
-    --foreground-secondary: #9B9A97;
-    --foreground-tertiary: #787774;
-    --card-bg: #202020;
-    --border-color: rgba(255, 255, 255, 0.09);
-    --border-color-strong: rgba(255, 255, 255, 0.13);
-
-    /* Interactive states (dark) */
-    --hover-bg: rgba(255, 255, 255, 0.04);
-    --active-bg: rgba(255, 255, 255, 0.08);
-    --selected-bg: rgba(255, 255, 255, 0.06);
-  }
-}
+/* Light mode only - dark mode disabled */
 
 body {
   background: var(--background);
