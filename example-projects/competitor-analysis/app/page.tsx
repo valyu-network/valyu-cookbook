@@ -263,9 +263,9 @@ function HomeContent() {
           </>
         ) : (
           // Side by Side Layout after analysis starts
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-8rem)]">
             {/* Left Column - Header + Form */}
-            <div className="w-full space-y-8 lg:col-span-4">
+            <div className="w-full space-y-8 max-w-md mx-auto lg:mx-0 lg:ml-auto">
               {/* Header - Left aligned */}
               <div>
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-[var(--background-secondary)] text-[var(--foreground-secondary)] text-xs font-medium mb-6">
@@ -297,7 +297,7 @@ function HomeContent() {
             </div>
 
             {/* Right Column - Results */}
-            <div className="w-full lg:col-span-8">
+            <div className="w-full max-w-2xl mx-auto lg:mx-0 lg:mr-auto">
               <ResearchResults
                 result={analysisResult}
                 isLoading={isAnalyzing && !analysisResult}
