@@ -116,12 +116,12 @@ export default function CompetitorAnalysisForm({
         </div>
 
         {error && (
-          <div className="p-3 rounded-md bg-[#FDEBEC] border border-[#EB5757]/20">
+          <div className="p-3 rounded-md bg-[var(--accent-red-bg)] border border-[var(--accent-red)]/20">
             <div className="flex items-start gap-2">
-              <svg className="w-4 h-4 text-[#EB5757] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-[var(--accent-red)] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <p className="text-sm text-[#EB5757]">{error}</p>
+              <p className="text-sm text-[var(--accent-red)]">{error}</p>
             </div>
           </div>
         )}
@@ -129,7 +129,7 @@ export default function CompetitorAnalysisForm({
         <button
           type="submit"
           disabled={loading}
-          className="w-full px-4 py-2.5 rounded-md bg-[var(--foreground)] hover:bg-[var(--foreground)]/90 disabled:bg-[var(--foreground-tertiary)] text-[var(--background)] font-medium transition-notion disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm"
+          className="w-full px-4 py-2.5 rounded-md bg-[var(--primary)] hover:bg-[var(--primary)]/90 disabled:bg-[var(--foreground-tertiary)] text-[var(--primary-foreground)] font-medium transition-notion disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm"
         >
           {loading ? (
             <>

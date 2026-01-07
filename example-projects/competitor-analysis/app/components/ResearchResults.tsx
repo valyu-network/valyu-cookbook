@@ -98,7 +98,7 @@ export default function ResearchResults({ result, isLoading, onReset, onCancel, 
             <button
               onClick={onCancel}
               disabled={isCancelling}
-              className="px-3 py-1.5 rounded-md text-[#EB5757] hover:bg-[#EB5757]/10 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium transition-notion flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-md text-[var(--accent-red)] hover:bg-[var(--accent-red)]/10 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium transition-notion flex items-center gap-1.5"
             >
               {isCancelling ? (
                 <svg className="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -141,7 +141,7 @@ export default function ResearchResults({ result, isLoading, onReset, onCancel, 
                   </div>
                   <div className="w-full bg-[var(--background-secondary)] rounded-full h-1.5 overflow-hidden">
                     <div
-                      className="bg-[var(--foreground)] h-1.5 rounded-full transition-all duration-500"
+                      className="bg-[var(--primary)] h-1.5 rounded-full transition-all duration-500"
                       style={{ width: `${(result.progress.current_step / result.progress.total_steps) * 100}%` }}
                     ></div>
                   </div>
@@ -150,19 +150,19 @@ export default function ResearchResults({ result, isLoading, onReset, onCancel, 
 
               <div className="space-y-2 text-sm text-[var(--foreground-secondary)]">
                 <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 bg-[#0F7B6C] rounded-full"></div>
+                  <div className="w-1.5 h-1.5 bg-[var(--accent-green)] rounded-full"></div>
                   <span>Searching multiple sources</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 bg-[#FA9F47] rounded-full"></div>
+                  <div className="w-1.5 h-1.5 bg-[var(--accent-orange)] rounded-full"></div>
                   <span>Analyzing content</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 bg-[#E9B44C] rounded-full"></div>
+                  <div className="w-1.5 h-1.5 bg-[var(--accent-amber)] rounded-full"></div>
                   <span>Extracting key insights</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 bg-[#9B9A97] rounded-full"></div>
+                  <div className="w-1.5 h-1.5 bg-[var(--accent-gray)] rounded-full"></div>
                   <span>Generating report</span>
                 </div>
               </div>
@@ -209,7 +209,7 @@ export default function ResearchResults({ result, isLoading, onReset, onCancel, 
             <button
               onClick={handleDownloadPdf}
               disabled={isDownloading}
-              className="px-3 py-1.5 rounded-md bg-[var(--foreground)] hover:bg-[var(--foreground)]/90 disabled:bg-[var(--foreground-tertiary)] text-[var(--background)] text-sm font-medium transition-notion flex items-center gap-2 disabled:cursor-wait"
+              className="px-3 py-1.5 rounded-md bg-[var(--primary)] hover:bg-[var(--primary)]/90 disabled:bg-[var(--foreground-tertiary)] text-[var(--primary-foreground)] text-sm font-medium transition-notion flex items-center gap-2 disabled:cursor-wait"
             >
               {isDownloading ? (
                 <svg className="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -333,7 +333,7 @@ export default function ResearchResults({ result, isLoading, onReset, onCancel, 
                 </div>
               )}
               {result.usage.total_cost !== undefined && (
-                <div className="p-3 rounded-md bg-[var(--foreground)] border border-[var(--foreground)]">
+                <div className="p-3 rounded-md bg-[var(--primary)] border border-[var(--primary)]">
                   <p className="text-xs text-[var(--background)]/70 mb-1">Total</p>
                   <p className="font-medium text-[var(--background)]">${result.usage.total_cost.toFixed(4)}</p>
                 </div>
