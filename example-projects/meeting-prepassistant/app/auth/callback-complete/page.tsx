@@ -121,87 +121,52 @@ function CallbackCompleteContent() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white">
-      <div className="text-center max-w-md mx-auto px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[var(--background)] p-4">
+      <div className="max-w-md w-full bg-[var(--card)] border border-[var(--border)] rounded-lg shadow-notion p-8 text-center">
         {status === "processing" && (
-          <div className="space-y-4">
-            <div className="flex justify-center">
-              <svg
-                className="animate-spin h-12 w-12 text-[#de5833]"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                  fill="none"
-                />
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                />
-              </svg>
+          <>
+            <div className="w-16 h-16 mx-auto mb-6">
+              <div className="w-16 h-16 border-4 border-[var(--border)] border-t-[var(--primary)] rounded-full animate-spin"></div>
             </div>
-            <h2 className="text-2xl font-bold text-gray-900">
-              Completing sign in...
+            <h2 className="text-xl font-semibold text-[var(--foreground)] mb-2">
+              Signing you in...
             </h2>
-            <p className="text-gray-600">
-              Please wait while we authenticate your account.
+            <p className="text-sm text-[var(--muted-foreground)]">
+              Please wait while we complete your authentication.
             </p>
-          </div>
+          </>
         )}
 
         {status === "success" && (
-          <div className="space-y-4">
-            <div className="flex justify-center">
-              <svg
-                className="h-12 w-12 text-green-500"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 13l4 4L19 7"
-                />
+          <>
+            <div className="w-16 h-16 mx-auto mb-6 bg-[var(--accent-green-bg)] rounded-full flex items-center justify-center">
+              <svg className="w-8 h-8 text-[var(--accent-green)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-gray-900">
-              Successfully signed in!
+            <h2 className="text-xl font-semibold text-[var(--foreground)] mb-2">
+              Success!
             </h2>
-            <p className="text-gray-600">Redirecting you back...</p>
-          </div>
+            <p className="text-sm text-[var(--muted-foreground)]">
+              Redirecting you to the app...
+            </p>
+          </>
         )}
 
         {status === "error" && (
-          <div className="space-y-4">
-            <div className="flex justify-center">
-              <svg
-                className="h-12 w-12 text-red-500"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
+          <>
+            <div className="w-16 h-16 mx-auto mb-6 bg-[var(--accent-red-bg)] rounded-full flex items-center justify-center">
+              <svg className="w-8 h-8 text-[var(--accent-red)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-gray-900">
+            <h2 className="text-xl font-semibold text-[var(--foreground)] mb-2">
               Authentication Failed
             </h2>
-            <p className="text-gray-600">{errorMessage}</p>
-            <p className="text-sm text-gray-500">Redirecting you back...</p>
-          </div>
+            <p className="text-sm text-[var(--muted-foreground)]">
+              {errorMessage}
+            </p>
+          </>
         )}
       </div>
     </div>
@@ -212,34 +177,14 @@ export default function CallbackComplete() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-white">
-          <div className="text-center max-w-md mx-auto px-4">
-            <div className="space-y-4">
-              <div className="flex justify-center">
-                <svg
-                  className="animate-spin h-12 w-12 text-[#de5833]"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                    fill="none"
-                  />
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  />
-                </svg>
-              </div>
-              <h2 className="text-2xl font-bold text-gray-900">
-                Loading...
-              </h2>
+        <div className="min-h-screen flex items-center justify-center bg-[var(--background)] p-4">
+          <div className="max-w-md w-full bg-[var(--card)] border border-[var(--border)] rounded-lg shadow-notion p-8 text-center">
+            <div className="w-16 h-16 mx-auto mb-6">
+              <div className="w-16 h-16 border-4 border-[var(--border)] border-t-[var(--primary)] rounded-full animate-spin"></div>
             </div>
+            <h2 className="text-xl font-semibold text-[var(--foreground)] mb-2">
+              Loading...
+            </h2>
           </div>
         </div>
       }

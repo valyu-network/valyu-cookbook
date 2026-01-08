@@ -55,11 +55,11 @@ export default function LoadingBrief({ topic }: LoadingBriefProps) {
   }, [currentStep]);
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-4 sm:p-6 max-w-2xl mx-auto shadow-sm">
+    <div className="bg-[var(--card)] border border-[var(--border)] rounded-lg p-4 sm:p-6 max-w-2xl mx-auto shadow-notion-sm">
       <div className="text-center mb-4">
-        <div className="inline-flex items-center justify-center w-14 h-14 bg-gray-100 rounded-full mb-3">
+        <div className="inline-flex items-center justify-center w-14 h-14 bg-[var(--muted)] rounded-full mb-3">
           <svg
-            className="w-7 h-7 text-gray-700 animate-spin"
+            className="w-7 h-7 text-[var(--muted-foreground)] animate-spin"
             viewBox="0 0 24 24"
           >
             <circle
@@ -78,11 +78,11 @@ export default function LoadingBrief({ topic }: LoadingBriefProps) {
             />
           </svg>
         </div>
-        <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">
+        <h2 className="text-lg sm:text-xl font-bold text-[var(--foreground)] mb-2">
           Preparing Your Brief
         </h2>
-        <p className="text-xs sm:text-sm text-gray-600 truncate px-4">
-          <span className="font-semibold text-gray-900">{topic}</span>
+        <p className="text-xs sm:text-sm text-[var(--muted-foreground)] truncate px-4">
+          <span className="font-semibold text-[var(--foreground)]">{topic}</span>
         </p>
       </div>
 
@@ -97,19 +97,19 @@ export default function LoadingBrief({ topic }: LoadingBriefProps) {
               key={index}
               className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-md transition-all duration-500 ${
                 isCompleted
-                  ? "bg-green-50 border border-green-200"
+                  ? "bg-[var(--accent-green-bg)] border border-[var(--accent-green)]/20"
                   : isCurrent
-                  ? "bg-gray-50 border border-gray-300"
-                  : "bg-white border border-gray-200 opacity-60"
+                  ? "bg-[var(--muted)] border border-[var(--border)]"
+                  : "bg-[var(--card)] border border-[var(--border)] opacity-60"
               }`}
             >
               <div
                 className={`flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-base sm:text-lg transition-all duration-300 ${
                   isCompleted
-                    ? "bg-green-600"
+                    ? "bg-[var(--accent-green)]"
                     : isCurrent
-                    ? "bg-[#de5833]"
-                    : "bg-gray-300"
+                    ? "bg-[var(--primary)]"
+                    : "bg-[var(--muted)]"
                 }`}
               >
                 {isCompleted ? (
@@ -123,17 +123,17 @@ export default function LoadingBrief({ topic }: LoadingBriefProps) {
                 <p
                   className={`text-xs sm:text-sm font-semibold transition-colors truncate ${
                     isCompleted
-                      ? "text-green-700"
+                      ? "text-[var(--accent-green)]"
                       : isCurrent
-                      ? "text-gray-900"
-                      : "text-gray-600"
+                      ? "text-[var(--foreground)]"
+                      : "text-[var(--muted-foreground)]"
                   }`}
                 >
                   {step.text}
                 </p>
                 {isCurrent && (
-                  <div className="mt-1 h-1 bg-gray-200 rounded-full overflow-hidden">
-                    <div className="h-full bg-[#de5833] animate-loading-bar"></div>
+                  <div className="mt-1 h-1 bg-[var(--muted)] rounded-full overflow-hidden">
+                    <div className="h-full bg-[var(--primary)] animate-loading-bar"></div>
                   </div>
                 )}
               </div>
@@ -141,13 +141,13 @@ export default function LoadingBrief({ topic }: LoadingBriefProps) {
               {isCurrent && (
                 <div className="flex-shrink-0 hidden sm:block">
                   <div className="flex gap-1">
-                    <div className="w-2 h-2 bg-[#de5833] rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-[var(--primary)] rounded-full animate-pulse"></div>
                     <div
-                      className="w-2 h-2 bg-[#de5833] rounded-full animate-pulse"
+                      className="w-2 h-2 bg-[var(--primary)] rounded-full animate-pulse"
                       style={{ animationDelay: "0.2s" }}
                     ></div>
                     <div
-                      className="w-2 h-2 bg-[#de5833] rounded-full animate-pulse"
+                      className="w-2 h-2 bg-[var(--primary)] rounded-full animate-pulse"
                       style={{ animationDelay: "0.4s" }}
                     ></div>
                   </div>
@@ -159,7 +159,7 @@ export default function LoadingBrief({ topic }: LoadingBriefProps) {
       </div>
 
       <div className="mt-4 text-center">
-        <p className="text-xs font-medium text-gray-600 bg-gray-50 px-4 py-2 rounded-full inline-block border border-gray-200">
+        <p className="text-xs font-medium text-[var(--muted-foreground)] bg-[var(--muted)] px-4 py-2 rounded-full inline-block border border-[var(--border)]">
           Usually takes 10-15 seconds
         </p>
       </div>

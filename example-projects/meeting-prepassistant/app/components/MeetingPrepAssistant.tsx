@@ -206,14 +206,14 @@ export default function MeetingPrepAssistant() {
         onClose={() => setShowSignInModal(false)}
         topic={topic}
       />
-      <div className="min-h-screen flex flex-col py-5 sm:py-7 px-4 bg-white">
+      <div className="min-h-screen flex flex-col py-5 sm:py-7 px-4 bg-[var(--background)]">
         <div className="max-w-5xl mx-auto flex-grow flex flex-col w-full">
         {!isLoading && (
           <div className="text-center mb-6">
-            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-3">
+            <h1 className="text-4xl sm:text-5xl font-bold text-[var(--foreground)] mb-3">
               Intel Espresso
             </h1>
-            <p className="text-lg sm:text-xl text-gray-600">
+            <p className="text-lg sm:text-xl text-[var(--muted-foreground)]">
               Get instant, AI-powered briefings on any topic before your meeting.
             </p>
           </div>
@@ -222,7 +222,7 @@ export default function MeetingPrepAssistant() {
         {isLoading && (
           <>
             <div className="text-center mb-5">
-              <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">
+              <h1 className="text-3xl sm:text-4xl font-bold text-[var(--foreground)]">
                 Intel Espresso
               </h1>
             </div>
@@ -231,12 +231,12 @@ export default function MeetingPrepAssistant() {
         )}
 
         {!result && !isLoading && (
-          <div className="bg-white border border-gray-200 rounded-lg p-6 sm:p-8 shadow-sm">
+          <div className="bg-[var(--card)] border border-[var(--border)] rounded-lg p-6 sm:p-8 shadow-notion-sm">
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label
                   htmlFor="topic"
-                  className="block text-base font-semibold text-gray-900 mb-2"
+                  className="block text-base font-semibold text-[var(--foreground)] mb-2"
                 >
                   Meeting Topic or Company Name
                 </label>
@@ -246,21 +246,21 @@ export default function MeetingPrepAssistant() {
                   value={topic}
                   onChange={(e) => setTopic(e.target.value)}
                   placeholder="e.g., Tesla Q4 earnings, OpenAI latest developments"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 text-lg"
+                  className="w-full px-4 py-3 border border-[var(--input)] rounded-md focus:outline-none focus:border-[var(--foreground)] focus:ring-1 focus:ring-[var(--ring)] text-lg bg-[var(--background)]"
                   disabled={isLoading}
                 />
               </div>
 
               {error && (
-                <div className="p-4 bg-red-50 border border-red-300 rounded-md">
-                  <p className="text-base text-red-900 font-medium">{error}</p>
+                <div className="p-4 bg-[var(--accent-red-bg)] border border-[var(--accent-red)]/30 rounded-md">
+                  <p className="text-base text-[var(--accent-red)] font-medium">{error}</p>
                 </div>
               )}
 
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full px-6 py-3 bg-[#de5833] text-white rounded-md text-lg font-semibold hover:bg-[#c74d2c] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-6 py-3 bg-[var(--primary)] text-[var(--primary-foreground)] rounded-md text-lg font-semibold hover:opacity-90 transition-notion disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
                   <span className="flex items-center justify-center gap-2">
@@ -291,34 +291,34 @@ export default function MeetingPrepAssistant() {
               </button>
             </form>
 
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              <h3 className="font-bold text-gray-900 mb-4 text-lg">
+            <div className="mt-6 pt-6 border-t border-[var(--border)]">
+              <h3 className="font-bold text-[var(--foreground)] mb-4 text-lg">
                 What you'll get:
               </h3>
               <ul className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-5">
-                <li className="flex items-center gap-2.5 p-3 bg-gray-50 rounded-md border border-gray-200">
-                  <span className="text-gray-700 font-bold text-base">✓</span>
-                  <span className="text-base font-medium text-gray-700">Executive summary</span>
-                </li>   
-                <li className="flex items-center gap-2.5 p-3 bg-gray-50 rounded-md border border-gray-200">
-                  <span className="text-gray-700 font-bold text-base">✓</span>
-                  <span className="text-base font-medium text-gray-700">Talking points</span>
+                <li className="flex items-center gap-2.5 p-3 bg-[var(--muted)] rounded-md border border-[var(--border)]">
+                  <span className="text-[var(--muted-foreground)] font-bold text-base">✓</span>
+                  <span className="text-base font-medium text-[var(--muted-foreground)]">Executive summary</span>
                 </li>
-                <li className="flex items-center gap-2.5 p-3 bg-gray-50 rounded-md border border-gray-200">
-                  <span className="text-gray-700 font-bold text-base">✓</span>
-                  <span className="text-base font-medium text-gray-700">News sources</span>
+                <li className="flex items-center gap-2.5 p-3 bg-[var(--muted)] rounded-md border border-[var(--border)]">
+                  <span className="text-[var(--muted-foreground)] font-bold text-base">✓</span>
+                  <span className="text-base font-medium text-[var(--muted-foreground)]">Talking points</span>
+                </li>
+                <li className="flex items-center gap-2.5 p-3 bg-[var(--muted)] rounded-md border border-[var(--border)]">
+                  <span className="text-[var(--muted-foreground)] font-bold text-base">✓</span>
+                  <span className="text-base font-medium text-[var(--muted-foreground)]">News sources</span>
                 </li>
               </ul>
 
-              <div className="p-4 bg-[#de5833]/5 border border-[#de5833]/20 rounded-md">
-                <p className="text-base text-gray-700 mb-2">
+              <div className="p-4 bg-[var(--muted)] border border-[var(--border)] rounded-md">
+                <p className="text-base text-[var(--muted-foreground)] mb-2">
                   <span className="font-semibold">Want to build your own?</span> Get started with Valyu's powerful search API.
                 </p>
                 <a
                   href="https://platform.valyu.ai"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-base font-semibold text-[#de5833] hover:text-[#c74d2c] transition-colors"
+                  className="inline-flex items-center gap-2 text-base font-semibold text-[var(--primary)] hover:opacity-80 transition-notion"
                 >
                   Sign up for free
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -335,7 +335,7 @@ export default function MeetingPrepAssistant() {
             <div className="flex justify-center">
               <button
                 onClick={handleReset}
-                className="px-6 py-3 text-sm font-semibold text-gray-900 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                className="px-6 py-3 text-sm font-semibold text-[var(--foreground)] bg-[var(--card)] border border-[var(--border)] rounded-md hover:bg-[var(--muted)] transition-notion"
               >
                 ← Prepare Another Meeting
               </button>
@@ -344,15 +344,15 @@ export default function MeetingPrepAssistant() {
           </div>
         )}
 
-        <footer className="mt-auto pt-4 border-t border-gray-200">
+        <footer className="mt-auto pt-4 border-t border-[var(--border)]">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-[var(--muted-foreground)]">
               <span>Built with Valyu API · </span>
               <a
                 href="https://platform.valyu.ai"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#de5833] hover:text-[#c74d2c] hover:underline font-semibold"
+                className="text-[var(--primary)] hover:opacity-80 hover:underline font-semibold"
               >
                 Get your API key
               </a>
@@ -362,7 +362,7 @@ export default function MeetingPrepAssistant() {
                 href="https://twitter.com/Valyuofficial"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-600 hover:text-gray-900 transition-colors"
+                className="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-notion"
                 aria-label="Valyu on Twitter"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -373,7 +373,7 @@ export default function MeetingPrepAssistant() {
                 href="https://www.linkedin.com/company/valyu-network"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-600 hover:text-gray-900 transition-colors"
+                className="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-notion"
                 aria-label="Valyu on LinkedIn"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -384,7 +384,7 @@ export default function MeetingPrepAssistant() {
                 href="https://github.com/valyu-network"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-600 hover:text-gray-900 transition-colors"
+                className="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-notion"
                 aria-label="Valyu on GitHub"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
