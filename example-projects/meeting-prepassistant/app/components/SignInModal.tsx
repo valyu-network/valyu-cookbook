@@ -82,20 +82,20 @@ export default function SignInModal({ isOpen, onClose, topic }: SignInModalProps
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/20"
         onClick={onClose}
       />
 
       {/* Modal */}
-      <div className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 animate-modal-scale">
+      <div className="relative bg-[var(--card)] rounded-lg shadow-notion max-w-sm w-full p-6 animate-modal-scale border border-[var(--border)]">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 transition-colors"
+          className="absolute top-4 right-4 text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-notion p-1 hover:bg-[var(--muted)] rounded"
           aria-label="Close modal"
         >
           <svg
-            className="w-6 h-6"
+            className="w-5 h-5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -103,49 +103,47 @@ export default function SignInModal({ isOpen, onClose, topic }: SignInModalProps
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeWidth={2}
+              strokeWidth={1.5}
               d="M6 18L18 6M6 6l12 12"
             />
           </svg>
         </button>
 
         {/* Content */}
-        <div className="space-y-6">
+        <div className="text-center">
           {/* Title */}
-          <h2 className="text-2xl font-bold text-gray-900 text-center">
+          <h2 className="text-lg font-semibold text-[var(--foreground)] mb-3">
             Sign in with Valyu
           </h2>
 
           {/* Description */}
-          <p className="text-center text-gray-600 leading-relaxed">
+          <p className="text-sm text-[var(--muted-foreground)] mb-5 leading-relaxed">
             Valyu powers our Meeting prep, giving our app real-time access to comprehensive web data, and research from proprietary data sources.
           </p>
 
           {/* Promotional Banner */}
-          <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg p-4">
-            <div className="flex items-start gap-3">
-              <div className="flex-shrink-0 text-2xl">🎁</div>
-              <div>
-                <p className="font-semibold text-green-800 text-base mb-1">
-                  $10 Free Credits
-                </p>
-                <p className="text-sm text-green-700">
-                  New accounts get $10 in free search credits. No credit card required.
-                </p>
-              </div>
+          <div className="bg-[var(--accent-green-bg)] border border-[var(--accent-green)]/20 rounded-md p-3 mb-5">
+            <div className="flex items-center justify-center gap-2 mb-1">
+              <span className="text-lg">🎁</span>
+              <span className="text-sm font-medium text-[var(--accent-green)]">
+                $10 Free Credits
+              </span>
             </div>
+            <p className="text-xs text-[var(--accent-green)]/80">
+              New accounts get $10 in free search credits. No credit card required.
+            </p>
           </div>
 
           {/* Sign In Button */}
           <button
             onClick={handleSignIn}
-            className="w-full bg-black text-white rounded-lg py-3.5 px-6 font-semibold text-base hover:bg-gray-900 transition-colors flex items-center justify-center gap-3"
+            className="w-full bg-[var(--primary)] hover:opacity-90 text-[var(--primary-foreground)] font-medium py-2.5 px-4 rounded-md transition-notion flex items-center justify-center gap-2 mb-3 text-sm"
           >
             <span>Sign in with Valyu</span>
           </button>
 
           {/* Footer Text */}
-          <p className="text-center text-sm text-gray-600">
+          <p className="text-xs text-[var(--muted-foreground)]">
             Don't have an account? You can create one during sign-in.
           </p>
         </div>

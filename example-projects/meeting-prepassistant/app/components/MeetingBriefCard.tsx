@@ -26,14 +26,14 @@ export default function MeetingBriefCard({
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6 sm:p-8 max-w-4xl mx-auto shadow-sm">
-      <div className="border-b border-gray-200 pb-6 mb-6">
-        <div className="flex items-start justify-between">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+    <div className="bg-[var(--card)] border border-[var(--border)] rounded-lg p-6 sm:p-8 max-w-4xl mx-auto shadow-notion-sm">
+      <div className="border-b border-[var(--border)] pb-6 mb-6">
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex-1 min-w-0">
+            <h1 className="text-xl sm:text-2xl font-bold text-[var(--foreground)] mb-2">
               {topic}
             </h1>
-            <p className="text-sm text-gray-600 font-medium">
+            <p className="text-sm text-[var(--muted-foreground)] font-medium">
               Generated: {formatDate(generatedAt)}
             </p>
           </div>
@@ -41,7 +41,7 @@ export default function MeetingBriefCard({
             <button
               onClick={onPrint}
               disabled={isDownloadingPdf}
-              className="px-4 py-2 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-100"
+              className="px-4 py-2 text-sm font-medium text-[var(--muted-foreground)] bg-[var(--card)] border border-[var(--border)] rounded-md hover:bg-[var(--muted)] transition-notion disabled:opacity-60 disabled:cursor-not-allowed whitespace-nowrap flex-shrink-0"
             >
               {isDownloadingPdf ? (
                 <span className="flex items-center gap-2">
@@ -75,25 +75,25 @@ export default function MeetingBriefCard({
       </div>
 
       <div className="space-y-6">
-        <section className="bg-gray-50 rounded-lg p-6 border border-gray-200">
-          <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+        <section className="bg-[var(--muted)] rounded-lg p-6 border border-[var(--border)]">
+          <h2 className="text-lg font-bold text-[var(--foreground)] mb-3 flex items-center gap-2">
             <span className="text-2xl">📋</span> Executive Summary
           </h2>
-          <p className="text-gray-700 leading-relaxed">
+          <p className="text-[var(--muted-foreground)] leading-relaxed">
             {brief.executiveSummary}
           </p>
         </section>
 
         {brief.keyDevelopments.length > 0 && (
-          <section className="bg-white rounded-lg p-6 border border-gray-200">
-            <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+          <section className="bg-[var(--card)] rounded-lg p-6 border border-[var(--border)]">
+            <h2 className="text-lg font-bold text-[var(--foreground)] mb-4 flex items-center gap-2">
               <span className="text-2xl">📰</span> Key Developments
             </h2>
             <ul className="space-y-3">
               {brief.keyDevelopments.map((dev, idx) => (
-                <li key={idx} className="flex gap-3 p-3 bg-gray-50 rounded-md border border-gray-200">
-                  <span className="text-gray-700 font-bold mt-0.5">•</span>
-                  <span className="text-gray-700">{dev}</span>
+                <li key={idx} className="flex gap-3 p-3 bg-[var(--muted)] rounded-md border border-[var(--border)]">
+                  <span className="text-[var(--muted-foreground)] font-bold mt-0.5">•</span>
+                  <span className="text-[var(--muted-foreground)]">{dev}</span>
                 </li>
               ))}
             </ul>
@@ -101,15 +101,15 @@ export default function MeetingBriefCard({
         )}
 
         {brief.keyPeople.length > 0 && (
-          <section className="bg-white rounded-lg p-6 border border-gray-200">
-            <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+          <section className="bg-[var(--card)] rounded-lg p-6 border border-[var(--border)]">
+            <h2 className="text-lg font-bold text-[var(--foreground)] mb-4 flex items-center gap-2">
               <span className="text-2xl">👥</span> Key People
             </h2>
             <div className="flex flex-wrap gap-2">
               {brief.keyPeople.map((person, idx) => (
                 <span
                   key={idx}
-                  className="px-4 py-2 bg-gray-100 text-gray-800 rounded-full text-sm font-semibold border border-gray-300"
+                  className="px-4 py-2 bg-[var(--muted)] text-[var(--secondary-foreground)] rounded-full text-sm font-semibold border border-[var(--border)]"
                 >
                   {person}
                 </span>
@@ -119,15 +119,15 @@ export default function MeetingBriefCard({
         )}
 
         {brief.importantDates.length > 0 && (
-          <section className="bg-white rounded-lg p-6 border border-gray-200">
-            <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+          <section className="bg-[var(--card)] rounded-lg p-6 border border-[var(--border)]">
+            <h2 className="text-lg font-bold text-[var(--foreground)] mb-4 flex items-center gap-2">
               <span className="text-2xl">📅</span> Important Dates
             </h2>
             <ul className="space-y-3">
               {brief.importantDates.map((date, idx) => (
-                <li key={idx} className="flex gap-3 p-3 bg-gray-50 rounded-md border border-gray-200">
-                  <span className="text-gray-700 font-bold mt-0.5">•</span>
-                  <span className="text-gray-700">{date}</span>
+                <li key={idx} className="flex gap-3 p-3 bg-[var(--muted)] rounded-md border border-[var(--border)]">
+                  <span className="text-[var(--muted-foreground)] font-bold mt-0.5">•</span>
+                  <span className="text-[var(--muted-foreground)]">{date}</span>
                 </li>
               ))}
             </ul>
@@ -135,15 +135,15 @@ export default function MeetingBriefCard({
         )}
 
         {brief.talkingPoints.length > 0 && (
-          <section className="bg-white rounded-lg p-6 border border-gray-200">
-            <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+          <section className="bg-[var(--card)] rounded-lg p-6 border border-[var(--border)]">
+            <h2 className="text-lg font-bold text-[var(--foreground)] mb-4 flex items-center gap-2">
               <span className="text-2xl">💬</span> Talking Points
             </h2>
             <ul className="space-y-3">
               {brief.talkingPoints.map((point, idx) => (
-                <li key={idx} className="flex gap-3 p-3 bg-gray-50 rounded-md border border-gray-200">
-                  <span className="text-gray-700 font-bold mt-0.5">•</span>
-                  <span className="text-gray-700">{point}</span>
+                <li key={idx} className="flex gap-3 p-3 bg-[var(--muted)] rounded-md border border-[var(--border)]">
+                  <span className="text-[var(--muted-foreground)] font-bold mt-0.5">•</span>
+                  <span className="text-[var(--muted-foreground)]">{point}</span>
                 </li>
               ))}
             </ul>
@@ -151,33 +151,47 @@ export default function MeetingBriefCard({
         )}
 
         {sources.length > 0 && (
-          <section className="bg-white rounded-lg p-6 border border-gray-200">
-            <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+          <section className="bg-[var(--card)] rounded-lg p-6 border border-[var(--border)]">
+            <h2 className="text-lg font-bold text-[var(--foreground)] mb-4 flex items-center gap-2">
               <span className="text-2xl">🔗</span> Sources
             </h2>
             <div className="space-y-3">
-              {sources.slice(0, 8).map((source, idx) => (
-                <div key={idx} className="border-l-4 border-gray-400 pl-4 py-2 bg-gray-50 rounded-r-md">
-                  <a
-                    href={source.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#de5833] hover:text-[#c74d2c] hover:underline font-semibold"
-                  >
-                    {source.title}
-                  </a>
-                  {source.publishedDate && (
-                    <p className="text-xs text-gray-500 mt-1 font-medium">
-                      {new Date(source.publishedDate).toLocaleDateString()}
-                    </p>
-                  )}
-                  {source.snippet && (
-                    <p className="text-sm text-gray-600 mt-1">
-                      {source.snippet}
-                    </p>
-                  )}
-                </div>
-              ))}
+              {sources.slice(0, 8).map((source, idx) => {
+                const domain = (() => {
+                  try {
+                    return new URL(source.url).hostname;
+                  } catch {
+                    return '';
+                  }
+                })();
+                return (
+                  <div key={idx} className="p-3 bg-[var(--muted)] rounded-md border border-[var(--border)]">
+                    <a
+                      href={source.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-start gap-3 group"
+                    >
+                      <img
+                        src={`https://www.google.com/s2/favicons?domain=${domain}&sz=32`}
+                        alt=""
+                        className="w-4 h-4 mt-0.5 flex-shrink-0 rounded"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <span className="text-sm text-[var(--foreground)] group-hover:underline font-medium line-clamp-2">
+                          {source.title}
+                        </span>
+                        <p className="text-xs text-[var(--muted-foreground)] mt-1 flex items-center gap-1">
+                          {domain}
+                          {source.publishedDate && (
+                            <span> · {new Date(source.publishedDate).toLocaleDateString()}</span>
+                          )}
+                        </p>
+                      </div>
+                    </a>
+                  </div>
+                );
+              })}
             </div>
           </section>
         )}

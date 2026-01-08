@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.3.2",
+    "@tailwindcss/typography": "^0.5.19",
     "@vercel/analytics": "^1.6.1",
     "date-fns": "^4.1.0",
     "next": "16.1.1",

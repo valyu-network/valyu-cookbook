@@ -274,32 +274,40 @@ export default function ResearchResults({ result, isLoading, onReset, onCancel, 
               Sources ({result.sources.length})
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {result.sources.map((source, index) => (
-                <a
-                  key={index}
-                  href={source.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block p-3 rounded-md bg-[var(--card-bg)] border border-[var(--border-color)] hover:border-[var(--border-color-strong)] hover:shadow-notion-sm transition-notion group"
-                >
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-6 h-6 rounded bg-[var(--background-secondary)] flex items-center justify-center text-[var(--foreground-secondary)] text-xs font-medium">
-                      {index + 1}
+              {result.sources.map((source, index) => {
+                const domain = (() => {
+                  try {
+                    return new URL(source.url).hostname;
+                  } catch {
+                    return '';
+                  }
+                })();
+                return (
+                  <a
+                    key={index}
+                    href={source.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block p-3 rounded-md bg-[var(--card-bg)] border border-[var(--border-color)] hover:border-[var(--border-color-strong)] hover:shadow-notion-sm transition-notion group"
+                  >
+                    <div className="flex items-start gap-3">
+                      <img
+                        src={`https://www.google.com/s2/favicons?domain=${domain}&sz=32`}
+                        alt=""
+                        className="w-5 h-5 mt-0.5 flex-shrink-0 rounded"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm text-[var(--foreground)] group-hover:underline line-clamp-2 leading-snug">
+                          {source.title}
+                        </p>
+                        <p className="text-xs text-[var(--foreground-tertiary)] truncate mt-1">
+                          {domain}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm text-[var(--foreground)] group-hover:underline line-clamp-2 leading-snug">
-                        {source.title}
-                      </p>
-                      <p className="text-xs text-[var(--foreground-tertiary)] truncate mt-1 flex items-center gap-1">
-                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                        </svg>
-                        {new URL(source.url).hostname}
-                      </p>
-                    </div>
-                  </div>
-                </a>
-              ))}
+                  </a>
+                );
+              })}
             </div>
           </div>
         )}
