@@ -30,7 +30,7 @@ When a user tries to generate a meeting brief without being authenticated:
 The modal redirects to Valyu's OAuth authorization endpoint:
 
 ```
-https://[SUPABASE_URL]/auth/v1/oauth/authorize?
+https://[AUTH_URL]/auth/v1/oauth/authorize?
   client_id=[CLIENT_ID]&
   redirect_uri=&
   response_type=code&
@@ -74,7 +74,7 @@ The callback-complete page ([page.tsx](app/auth/callback-complete/page.tsx)) the
 3. The API endpoint exchanges the code for tokens:
 
 ```
-POST https://[SUPABASE_URL]/auth/v1/oauth/token
+POST https://[AUTH_URL]/auth/v1/oauth/token
 {
   "grant_type": "authorization_code",
   "code": "[AUTHORIZATION_CODE]",
@@ -123,8 +123,8 @@ Configure these in `.env.local`:
 ### Required Variables
 
 ```bash
-# Valyu Platform's Supabase URL (for OAuth endpoints)
-NEXT_PUBLIC_VALYU_SUPABASE_URL=https://[project-ref].supabase.co
+# Valyu OAuth URL (for OAuth endpoints)
+NEXT_PUBLIC_VALYU_AUTH_URL=https://auth.valyu.ai
 
 # OAuth Client ID (safe for client-side)
 NEXT_PUBLIC_VALYU_CLIENT_ID=your-client-id
@@ -243,7 +243,7 @@ app/
 ## Troubleshooting
 
 ### "OAuth is not configured" Error
-- Check that `NEXT_PUBLIC_VALYU_SUPABASE_URL` and `NEXT_PUBLIC_VALYU_CLIENT_ID` are set
+- Check that `NEXT_PUBLIC_VALYU_AUTH_URL` and `NEXT_PUBLIC_VALYU_CLIENT_ID` are set
 - Ensure the variable names have the `NEXT_PUBLIC_` prefix for client-side access
 - Restart the Next.js dev server after changing environment variables
 

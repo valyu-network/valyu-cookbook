@@ -41,12 +41,15 @@ export default function CompetitorAnalysisForm({
     }
   }, [isAnalyzing]);
 
+  // Check if OAuth is configured (client-side check)
+  const isOAuthConfigured = typeof window !== 'undefined' && !!process.env.NEXT_PUBLIC_VALYU_CLIENT_ID;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    // Check if user is logged in
-    if (!user) {
+    // Only require sign-in if OAuth is configured
+    if (isOAuthConfigured && !user) {
       onSignInClick();
       return;
     }

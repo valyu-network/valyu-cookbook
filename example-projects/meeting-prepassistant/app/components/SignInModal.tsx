@@ -57,13 +57,13 @@ export default function SignInModal({ isOpen, onClose, topic }: SignInModalProps
     // Store code_verifier for later use in token exchange
     sessionStorage.setItem("pkceCodeVerifier", codeVerifier);
 
-    // Build the OAuth URL using Supabase OAuth endpoints
-    const supabaseUrl = process.env.NEXT_PUBLIC_VALYU_SUPABASE_URL;
+    // Build the OAuth URL
+    const authUrl = process.env.NEXT_PUBLIC_VALYU_AUTH_URL;
     const clientId = process.env.NEXT_PUBLIC_VALYU_CLIENT_ID;
     const redirectUriEnv = process.env.NEXT_PUBLIC_REDIRECT_URI;
 
     // Check if environment variables are configured
-    if (!supabaseUrl || !clientId || !redirectUriEnv) {
+    if (!authUrl || !clientId || !redirectUriEnv) {
       console.error("OAuth environment variables not configured");
       alert("OAuth is not configured. Please contact support.");
       return;
@@ -72,7 +72,7 @@ export default function SignInModal({ isOpen, onClose, topic }: SignInModalProps
     const redirectUri = encodeURIComponent(redirectUriEnv);
 
     // Construct OAuth URL with PKCE parameters
-    const oauthUrl = `${supabaseUrl}/auth/v1/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&state=${state}&code_challenge=${codeChallenge}&code_challenge_method=S256`;
+    const oauthUrl = `${authUrl}/auth/v1/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&state=${state}&code_challenge=${codeChallenge}&code_challenge_method=S256`;
 
     // Redirect to Valyu OAuth
     window.location.href = oauthUrl;

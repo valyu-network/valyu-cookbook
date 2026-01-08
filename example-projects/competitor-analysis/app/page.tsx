@@ -15,6 +15,9 @@ interface User {
   email_verified?: boolean;
 }
 
+// Check if OAuth is configured
+const isOAuthConfigured = !!process.env.NEXT_PUBLIC_VALYU_CLIENT_ID;
+
 function HomeContent() {
   const [analysisResult, setAnalysisResult] = useState<any>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -40,6 +43,9 @@ function HomeContent() {
   }, []);
 
   useEffect(() => {
+    // Only load user data if OAuth is configured
+    if (!isOAuthConfigured) return;
+
     // Load user from localStorage
     const storedUser = localStorage.getItem('valyu_user');
     if (storedUser) {
