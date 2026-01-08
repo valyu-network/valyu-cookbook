@@ -21,7 +21,7 @@ export default function DiscordBanner() {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed top-4 left-4 z-50 animate-fade-in">
+    <div className="fixed top-4 left-6 z-50 animate-fade-in">
       <a
         href="https://discord.gg/BhUWrFbHRa"
         target="_blank"
