@@ -27,7 +27,6 @@ export async function POST(req: NextRequest) {
     const data: any = await valyu.answer(
       `Latest news and key developments about ${topic}`,
       {
-        searchType: "news",
         structuredOutput: {
           type: "object",
           properties: {
