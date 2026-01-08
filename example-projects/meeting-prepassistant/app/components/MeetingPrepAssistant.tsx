@@ -339,7 +339,7 @@ export default function MeetingPrepAssistant() {
           </div>
         )}
 
-        <footer className="mt-auto pt-6">
+        <footer className="mt-auto pt-16">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
             <div className="text-xs text-[var(--muted-foreground)]">
               <span>Built with Valyu API · </span>
