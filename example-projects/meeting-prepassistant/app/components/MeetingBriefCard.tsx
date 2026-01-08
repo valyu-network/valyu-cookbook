@@ -28,9 +28,9 @@ export default function MeetingBriefCard({
   return (
     <div className="bg-[var(--card)] border border-[var(--border)] rounded-lg p-6 sm:p-8 max-w-4xl mx-auto shadow-notion-sm">
       <div className="border-b border-[var(--border)] pb-6 mb-6">
-        <div className="flex items-start justify-between">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-[var(--foreground)] mb-2">
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex-1 min-w-0">
+            <h1 className="text-xl sm:text-2xl font-bold text-[var(--foreground)] mb-2">
               {topic}
             </h1>
             <p className="text-sm text-[var(--muted-foreground)] font-medium">
@@ -41,7 +41,7 @@ export default function MeetingBriefCard({
             <button
               onClick={onPrint}
               disabled={isDownloadingPdf}
-              className="px-4 py-2 text-sm font-semibold text-[var(--muted-foreground)] bg-[var(--card)] border border-[var(--border)] rounded-md hover:bg-[var(--muted)] transition-notion disabled:opacity-60 disabled:cursor-not-allowed"
+              className="px-4 py-2 text-sm font-medium text-[var(--muted-foreground)] bg-[var(--card)] border border-[var(--border)] rounded-md hover:bg-[var(--muted)] transition-notion disabled:opacity-60 disabled:cursor-not-allowed whitespace-nowrap flex-shrink-0"
             >
               {isDownloadingPdf ? (
                 <span className="flex items-center gap-2">
