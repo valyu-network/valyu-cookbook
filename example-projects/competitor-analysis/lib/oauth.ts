@@ -38,7 +38,7 @@ function base64URLEncode(buffer: Uint8Array): string {
 export function isOAuthConfigured(): boolean {
   return !!(
     process.env.NEXT_PUBLIC_VALYU_CLIENT_ID &&
-    process.env.NEXT_PUBLIC_VALYU_SUPABASE_URL &&
+    process.env.NEXT_PUBLIC_VALYU_AUTH_URL &&
     process.env.NEXT_PUBLIC_REDIRECT_URI
   );
 }
@@ -49,7 +49,7 @@ export function isOAuthConfigured(): boolean {
 export async function initiateOAuthFlow() {
   // Check if OAuth is configured
   if (!isOAuthConfigured()) {
-    console.warn('OAuth is not configured. Set NEXT_PUBLIC_VALYU_CLIENT_ID, NEXT_PUBLIC_VALYU_SUPABASE_URL, and NEXT_PUBLIC_REDIRECT_URI.');
+    console.warn('OAuth is not configured. Set NEXT_PUBLIC_VALYU_CLIENT_ID, NEXT_PUBLIC_VALYU_AUTH_URL, and NEXT_PUBLIC_REDIRECT_URI.');
     return;
   }
 
@@ -65,7 +65,7 @@ export async function initiateOAuthFlow() {
   sessionStorage.setItem('oauth_state', state);
 
   // Build authorization URL
-  const authUrl = new URL('/auth/v1/oauth/authorize', process.env.NEXT_PUBLIC_VALYU_SUPABASE_URL);
+  const authUrl = new URL('/auth/v1/oauth/authorize', process.env.NEXT_PUBLIC_VALYU_AUTH_URL);
   authUrl.searchParams.append('client_id', process.env.NEXT_PUBLIC_VALYU_CLIENT_ID!);
   authUrl.searchParams.append('redirect_uri', process.env.NEXT_PUBLIC_REDIRECT_URI!);
   authUrl.searchParams.append('response_type', 'code');

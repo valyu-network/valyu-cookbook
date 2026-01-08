@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
 
     // Exchange authorization code for access token
     const tokenResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_VALYU_SUPABASE_URL}/auth/v1/oauth/token`,
+      `${process.env.NEXT_PUBLIC_VALYU_AUTH_URL}/auth/v1/oauth/token`,
       {
         method: 'POST',
         headers: {
