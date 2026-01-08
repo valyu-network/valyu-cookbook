@@ -1,104 +1,24 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { MeetingPrepResult } from "@/app/types/meeting-prep";
 import MeetingBriefCard from "./MeetingBriefCard";
 import LoadingBrief from "./LoadingBrief";
 import DiscordBanner from "./DiscordBanner";
-import SignInModal from "./SignInModal";
 import Sidebar from "./Sidebar";
-
-// Check if OAuth is configured
-const isOAuthConfigured = !!process.env.NEXT_PUBLIC_VALYU_CLIENT_ID;
-
-interface UserInfo {
-  email: string;
-  name?: string;
-  picture?: string;
-}
 
 export default function MeetingPrepAssistant() {
   const [topic, setTopic] = useState("");
   const [result, setResult] = useState<MeetingPrepResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isSignedIn, setIsSignedIn] = useState(false);
-  const [showSignInModal, setShowSignInModal] = useState(false);
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
-
-  useEffect(() => {
-    // Only check for auth if OAuth is configured
-    if (!isOAuthConfigured) return;
-
-    // Check if user has an access token (authenticated via OAuth)
-    const accessToken = localStorage.getItem("valyuAccessToken");
-    setIsSignedIn(!!accessToken);
-
-    // Fetch user info if authenticated
-    if (accessToken) {
-      fetch("/api/auth/user", {
-        headers: {
-          "Authorization": `Bearer ${accessToken}`,
-        },
-      })
-        .then(async (response) => {
-          if (response.ok) {
-            const data = await response.json();
-            setUserInfo(data);
-          }
-        })
-        .catch((err) => {
-          console.error("Failed to fetch user info:", err);
-        });
-    }
-
-    // Check if there's a pending topic (user returned from OAuth)
-    const pendingTopic = sessionStorage.getItem("pendingMeetingTopic");
-    if (pendingTopic && accessToken) {
-      setTopic(pendingTopic);
-      sessionStorage.removeItem("pendingMeetingTopic");
-
-      // Auto-generate brief after successful OAuth
-      setIsLoading(true);
-      setError(null);
-      setResult(null);
-
-      fetch("/api/meeting-prep", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify({ topic: pendingTopic }),
-      })
-        .then(async (response) => {
-          if (!response.ok) {
-            throw new Error("Failed to generate meeting brief");
-          }
-          const data = await response.json();
-          setResult(data);
-        })
-        .catch((err) => {
-          setError(err instanceof Error ? err.message : "An error occurred");
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!topic.trim()) {
       setError("Please enter a meeting topic");
-      return;
-    }
-
-    // Only require sign-in if OAuth is configured
-    if (isOAuthConfigured && !isSignedIn) {
-      setShowSignInModal(true);
       return;
     }
 
@@ -111,18 +31,11 @@ export default function MeetingPrepAssistant() {
     setResult(null);
 
     try {
-      const accessToken = localStorage.getItem("valyuAccessToken");
-      const headers: HeadersInit = {
-        "Content-Type": "application/json",
-      };
-
-      if (accessToken) {
-        headers["Authorization"] = `Bearer ${accessToken}`;
-      }
-
       const response = await fetch("/api/meeting-prep", {
         method: "POST",
-        headers,
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ topic: topic.trim() }),
       });
 
@@ -176,42 +89,10 @@ export default function MeetingPrepAssistant() {
     setError(null);
   };
 
-  const handleLogout = () => {
-    // Clear all authentication data
-    localStorage.removeItem("valyuAccessToken");
-    localStorage.removeItem("valyuRefreshToken");
-    localStorage.removeItem("valyuTokenExpiresAt");
-    sessionStorage.removeItem("pendingMeetingTopic");
-    sessionStorage.removeItem("oauthState");
-    sessionStorage.removeItem("pkceCodeVerifier");
-
-    // Reset state
-    setIsSignedIn(false);
-    setUserInfo(null);
-    setResult(null);
-    setTopic("");
-    setError(null);
-  };
-
-  const handleLoginClick = () => {
-    setShowSignInModal(true);
-  };
-
   return (
     <>
       <DiscordBanner />
-      <Sidebar
-        isSignedIn={isSignedIn}
-        userEmail={userInfo?.email}
-        userAvatarUrl={userInfo?.picture}
-        onLoginClick={handleLoginClick}
-        onLogoutClick={handleLogout}
-      />
-      <SignInModal
-        isOpen={showSignInModal}
-        onClose={() => setShowSignInModal(false)}
-        topic={topic}
-      />
+      <Sidebar />
       <div className="min-h-screen flex flex-col py-12 px-6 sm:px-8 lg:px-12 bg-[var(--background)]">
         <div className={`${result ? 'max-w-4xl' : 'max-w-2xl'} mx-auto flex-grow flex flex-col w-full`}>
         {!isLoading && (

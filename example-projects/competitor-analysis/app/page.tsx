@@ -1,37 +1,20 @@
 'use client';
 
 import { useState, useEffect, Suspense, useRef } from 'react';
-import { useSearchParams } from 'next/navigation';
 import CompetitorAnalysisForm from './components/CompetitorAnalysisForm';
 import ResearchResults from './components/ResearchResults';
 import Sidebar from './components/Sidebar';
-import SignInModal from './components/SignInModal';
-
-interface User {
-  id: string;
-  email: string;
-  name?: string;
-  picture?: string;
-  email_verified?: boolean;
-}
-
-// Check if OAuth is configured
-const isOAuthConfigured = !!process.env.NEXT_PUBLIC_VALYU_CLIENT_ID;
 
 function HomeContent() {
   const [analysisResult, setAnalysisResult] = useState<any>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showDiscordBanner, setShowDiscordBanner] = useState(true);
-  const [showSignInModal, setShowSignInModal] = useState(false);
-  const [showAuthSuccess, setShowAuthSuccess] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
   const [websiteUrl, setWebsiteUrl] = useState('https://');
   const [summaryText, setSummaryText] = useState('');
   const [currentTaskId, setCurrentTaskId] = useState<string | null>(null);
   const [isCancelling, setIsCancelling] = useState(false);
   const cancelledRef = useRef(false);
   const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
-  const searchParams = useSearchParams();
 
   // Cleanup polling on unmount
   useEffect(() => {
@@ -41,41 +24,6 @@ function HomeContent() {
       }
     };
   }, []);
-
-  useEffect(() => {
-    // Only load user data if OAuth is configured
-    if (!isOAuthConfigured) return;
-
-    // Load user from localStorage
-    const storedUser = localStorage.getItem('valyu_user');
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (error) {
-        console.error('Failed to parse user data:', error);
-        localStorage.removeItem('valyu_user');
-      }
-    }
-
-    // Check if user just completed authentication
-    const authStatus = searchParams.get('auth');
-    if (authStatus === 'success') {
-      setShowAuthSuccess(true);
-      // Reload user from localStorage after successful auth
-      const newUser = localStorage.getItem('valyu_user');
-      if (newUser) {
-        try {
-          setUser(JSON.parse(newUser));
-        } catch (error) {
-          console.error('Failed to parse user data:', error);
-        }
-      }
-      // Hide success message after 5 seconds
-      setTimeout(() => setShowAuthSuccess(false), 5000);
-      // Clean up URL
-      window.history.replaceState({}, '', '/');
-    }
-  }, [searchParams]);
 
   const pollStatus = async (taskId: string) => {
     // Don't poll if cancelled
@@ -171,31 +119,7 @@ function HomeContent() {
   return (
     <div className="min-h-screen bg-[var(--background)] py-16 px-6 sm:px-8 lg:px-12">
       {/* Sidebar */}
-      <Sidebar onSignInClick={() => setShowSignInModal(true)} user={user} />
-
-      {/* Sign In Modal */}
-      <SignInModal isOpen={showSignInModal} onClose={() => setShowSignInModal(false)} />
-
-      {/* Authentication Success Notification */}
-      {showAuthSuccess && (
-        <div className="fixed top-6 right-6 z-50">
-          <div className="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg px-5 py-4 shadow-notion flex items-center gap-3">
-            <div className="w-6 h-6 rounded-full bg-[var(--accent-green-bg)] flex items-center justify-center">
-              <svg className="w-3.5 h-3.5 text-[var(--accent-green)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <div>
-              <div className="text-sm font-medium text-[var(--foreground)]">
-                Successfully signed in
-              </div>
-              <div className="text-xs text-[var(--foreground-secondary)]">
-                Welcome to Valyu Competitor Analysis
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <Sidebar />
 
       {/* Discord Banner - Minimal Notion style */}
       {showDiscordBanner && (
@@ -257,8 +181,6 @@ function HomeContent() {
             <div className="flex justify-center">
               <CompetitorAnalysisForm
                 onTaskCreated={handleTaskCreated}
-                user={user}
-                onSignInClick={() => setShowSignInModal(true)}
                 websiteUrl={websiteUrl}
                 setWebsiteUrl={setWebsiteUrl}
                 summaryText={summaryText}
@@ -292,8 +214,6 @@ function HomeContent() {
               {/* Form */}
               <CompetitorAnalysisForm
                 onTaskCreated={handleTaskCreated}
-                user={user}
-                onSignInClick={() => setShowSignInModal(true)}
                 websiteUrl={websiteUrl}
                 setWebsiteUrl={setWebsiteUrl}
                 summaryText={summaryText}
