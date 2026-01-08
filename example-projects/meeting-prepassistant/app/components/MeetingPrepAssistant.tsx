@@ -11,7 +11,7 @@ import Sidebar from "./Sidebar";
 interface UserInfo {
   email: string;
   name?: string;
-  avatar_url?: string;
+  picture?: string;
 }
 
 export default function MeetingPrepAssistant() {
@@ -197,7 +197,7 @@ export default function MeetingPrepAssistant() {
       <Sidebar
         isSignedIn={isSignedIn}
         userEmail={userInfo?.email}
-        userAvatarUrl={userInfo?.avatar_url}
+        userAvatarUrl={userInfo?.picture}
         onLoginClick={handleLoginClick}
         onLogoutClick={handleLogout}
       />
