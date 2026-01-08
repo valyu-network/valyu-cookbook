@@ -2,18 +2,8 @@
 
 import { useState, useEffect } from 'react';
 
-interface User {
-  id: string;
-  email: string;
-  name?: string;
-  picture?: string;
-  email_verified?: boolean;
-}
-
 interface CompetitorAnalysisFormProps {
   onTaskCreated: (taskId: string) => void;
-  user: User | null;
-  onSignInClick: () => void;
   websiteUrl: string;
   setWebsiteUrl: (url: string) => void;
   summaryText: string;
@@ -23,8 +13,6 @@ interface CompetitorAnalysisFormProps {
 
 export default function CompetitorAnalysisForm({
   onTaskCreated,
-  user,
-  onSignInClick,
   websiteUrl,
   setWebsiteUrl,
   summaryText,
@@ -41,19 +29,9 @@ export default function CompetitorAnalysisForm({
     }
   }, [isAnalyzing]);
 
-  // Check if OAuth is configured (client-side check)
-  const isOAuthConfigured = typeof window !== 'undefined' && !!process.env.NEXT_PUBLIC_VALYU_CLIENT_ID;
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-
-    // Only require sign-in if OAuth is configured
-    if (isOAuthConfigured && !user) {
-      onSignInClick();
-      return;
-    }
-
     setLoading(true);
 
     try {
