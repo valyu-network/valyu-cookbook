@@ -156,28 +156,42 @@ export default function MeetingBriefCard({
               <span className="text-2xl">🔗</span> Sources
             </h2>
             <div className="space-y-3">
-              {sources.slice(0, 8).map((source, idx) => (
-                <div key={idx} className="border-l-4 border-[var(--border)] pl-4 py-2 bg-[var(--muted)] rounded-r-md">
-                  <a
-                    href={source.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[var(--primary)] hover:opacity-80 hover:underline font-semibold"
-                  >
-                    {source.title}
-                  </a>
-                  {source.publishedDate && (
-                    <p className="text-xs text-[var(--muted-foreground)] mt-1 font-medium">
-                      {new Date(source.publishedDate).toLocaleDateString()}
-                    </p>
-                  )}
-                  {source.snippet && (
-                    <p className="text-sm text-[var(--muted-foreground)] mt-1">
-                      {source.snippet}
-                    </p>
-                  )}
-                </div>
-              ))}
+              {sources.slice(0, 8).map((source, idx) => {
+                const domain = (() => {
+                  try {
+                    return new URL(source.url).hostname;
+                  } catch {
+                    return '';
+                  }
+                })();
+                return (
+                  <div key={idx} className="p-3 bg-[var(--muted)] rounded-md border border-[var(--border)]">
+                    <a
+                      href={source.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-start gap-3 group"
+                    >
+                      <img
+                        src={`https://www.google.com/s2/favicons?domain=${domain}&sz=32`}
+                        alt=""
+                        className="w-4 h-4 mt-0.5 flex-shrink-0 rounded"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <span className="text-sm text-[var(--foreground)] group-hover:underline font-medium line-clamp-2">
+                          {source.title}
+                        </span>
+                        <p className="text-xs text-[var(--muted-foreground)] mt-1 flex items-center gap-1">
+                          {domain}
+                          {source.publishedDate && (
+                            <span> · {new Date(source.publishedDate).toLocaleDateString()}</span>
+                          )}
+                        </p>
+                      </div>
+                    </a>
+                  </div>
+                );
+              })}
             </div>
           </section>
         )}
