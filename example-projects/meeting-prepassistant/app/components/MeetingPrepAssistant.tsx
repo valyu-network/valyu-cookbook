@@ -8,6 +8,9 @@ import DiscordBanner from "./DiscordBanner";
 import SignInModal from "./SignInModal";
 import Sidebar from "./Sidebar";
 
+// Check if OAuth is configured
+const isOAuthConfigured = !!process.env.NEXT_PUBLIC_VALYU_CLIENT_ID;
+
 interface UserInfo {
   email: string;
   name?: string;
@@ -25,6 +28,9 @@ export default function MeetingPrepAssistant() {
   const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
 
   useEffect(() => {
+    // Only check for auth if OAuth is configured
+    if (!isOAuthConfigured) return;
+
     // Check if user has an access token (authenticated via OAuth)
     const accessToken = localStorage.getItem("valyuAccessToken");
     setIsSignedIn(!!accessToken);
@@ -90,8 +96,8 @@ export default function MeetingPrepAssistant() {
       return;
     }
 
-    // Check if user is signed in
-    if (!isSignedIn) {
+    // Only require sign-in if OAuth is configured
+    if (isOAuthConfigured && !isSignedIn) {
       setShowSignInModal(true);
       return;
     }

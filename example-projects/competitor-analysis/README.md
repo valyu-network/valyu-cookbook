@@ -74,30 +74,19 @@ Navigate to [http://localhost:3000](http://localhost:3000)
 ```
 app/
 ├── api/
-│   ├── competitor-analysis/
-│   │   ├── route.ts              # API endpoint for creating research tasks
-│   │   ├── cancel/
-│   │   │   └── route.ts          # API endpoint for cancelling research tasks
-│   │   └── status/
-│   │       └── route.ts          # API endpoint for checking task status and progress
-│   └── oauth/
-│       └── token/
-│           └── route.ts          # OAuth token exchange endpoint
-├── auth/
-│   └── valyu/
-│       └── callback/
-│           └── page.tsx          # OAuth callback handler page
+│   └── competitor-analysis/
+│       ├── route.ts              # API endpoint for creating research tasks
+│       ├── cancel/
+│       │   └── route.ts          # API endpoint for cancelling research tasks
+│       └── status/
+│           └── route.ts          # API endpoint for checking task status and progress
 ├── components/
 │   ├── CompetitorAnalysisForm.tsx    # Input form with polling logic
 │   ├── ResearchResults.tsx           # Results display with loading states
-│   ├── Sidebar.tsx                   # Navigation sidebar component
-│   ├── SignInModal.tsx               # Authentication modal
-│   └── UserProfile.tsx               # User profile display component
+│   └── Sidebar.tsx                   # Navigation sidebar component
 ├── page.tsx                  # Main homepage with side-by-side layout
 ├── layout.tsx                # Root layout
 └── globals.css               # Global styles and animations
-lib/
-└── oauth.ts                  # OAuth utility functions
 ```
 
 ## API Configuration

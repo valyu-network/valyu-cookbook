@@ -87,10 +87,11 @@ npm run dev
 app/
 ├── api/
 │   └── meeting-prep/
-│       └── route.ts                # API route for Valyu integration
+│       └── route.ts                # API route for Valyu Answer API
 ├── components/
 │   ├── MeetingPrepAssistant.tsx    # Main application component
-│   └── MeetingBriefCard.tsx        # Displays the generated brief
+│   ├── MeetingBriefCard.tsx        # Displays the generated brief
+│   └── Sidebar.tsx                 # Navigation sidebar
 ├── types/
 │   └── meeting-prep.ts             # TypeScript type definitions
 ├── layout.tsx
