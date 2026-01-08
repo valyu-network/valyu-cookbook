@@ -207,7 +207,7 @@ export default function MeetingPrepAssistant() {
         topic={topic}
       />
       <div className="min-h-screen flex flex-col py-12 px-6 sm:px-8 lg:px-12 bg-[var(--background)]">
-        <div className="max-w-2xl mx-auto flex-grow flex flex-col w-full">
+        <div className={`${result ? 'max-w-4xl' : 'max-w-2xl'} mx-auto flex-grow flex flex-col w-full`}>
         {!isLoading && (
           <div className="text-center mb-10">
             <h1 className="text-3xl sm:text-4xl font-bold text-[var(--foreground)] mb-3 tracking-tight">
